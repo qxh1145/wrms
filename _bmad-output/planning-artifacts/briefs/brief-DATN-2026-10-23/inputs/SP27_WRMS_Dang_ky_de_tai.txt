@@ -1,0 +1,111 @@
+TITLE: SP27_WRMS_Dang_ky_de_tai
+=== TAB: Tab 1 ===
+CAPSTONE PROJECT REGISTER
+Class:	CP_SEP490	Duration time:  	From  01/01/2027  To  30/04/2027
+Profession: Information Technology	Specialty:      	Software Engineering                                             
+Kinds of person make registers:	Lecturer:  ☐	Students:  ☐
+1. Register information for supervisor 
+|  | Full name | Phone | E-Mail | Title |
+| Supervisor 1 | Nguyễn Thi Thúy Hoài | 0982827763 | hoaintt40@fe.edu.vn |  |
+| Supervisor 2 |  |  |  |  |
+2. Register information for students
+|  | Full name | Student code | Phone | E-mail | Role in Group |
+| Student 1 | Trần Anh Quân | DE190740 |  | knightdragon184@gmail.com | Leader |
+| Student 2 | Trần Văn Đức | DE190508 |  | duct23333@gmail.com | Member |
+| Student 3 | Võ Nhật Duy | DE190516 |  | duynhatvo05@gmail.com | Member |
+| Student 4 | Nguyễn Thị Quỳnh Châu | DE190737 |  | quynhchaun9@gmail.com | Member |
+| Student 5 | Nguyễn Tiến Dũng | DE180004 |  | dungntde180004@fpt.edu.vn | Member |
+3. Register content of Capstone Project 
+3.1. Capstone Project name: 
+English: Citizen Field Report Intake and Task Assignment System for Hoa Xuan Ward
+Vietnamese: Hệ thống tiếp nhận, phân công và xử lý phản ánh hiện trường của người dân tại phường Hòa XuânAbbreviation: WRMS
+3.2. Context: (brief introduction)
+Residents of Hoa Xuan Ward are usually the first to notice problems in public spaces, such as illegal dumping, sidewalk encroachment, damaged roads, blocked drains or broken street lights, but they lack a quick channel to report them to the Ward People's Committee and follow the result. Ward staff receive such reports through visits, phone calls and messages, often several about the same site, and must decide manually what to handle first. This project digitizes the process by which the Ward People's Committee receives, assigns and handles field reports from residents. Residents submit reports with a category, photos and location; the system screens invalid submissions and groups reports of the same site, and for the pilot category suggests a priority level from the photos; the ward then receives, assigns and tracks each report until it is resolved. Scope: field reports from residents to the People's Committee of Hoa Xuan Ward, with a web application for Admin and ward officers and a mobile application for residents and task assignees. In this phase, automatic priority assessment is piloted for environmental sanitation reports; reports in other categories follow the same workflow, with priority set by ward officers. Complaints and denunciations (handled under separate legal procedures), administrative procedure applications, transfer of reports to city-level agencies and community engagement features (points, rankings, rewards) are out of scope for this phase.
+Objectives: 
+- Provide residents of Hoa Xuan Ward with a mobile channel to submit field reports with a category, photos, description and location, and to follow each report until it is resolved.
+- Automatically screen invalid reports and group reports of the same site for all categories, and suggest a priority level from photos for environmental sanitation reports, so that reports are handled in the right order.
+- Digitize the workflow of receiving, assigning, handling and verifying reports between Admin, ward officers and task assignees (staff of relevant departments or volunteers).
+- Provide a hotspot map, dashboard and statistics by category, status and area to support management decisions.
+Technology/algorithm:  Technology / Algorithm / Research Methodology:
+(GVHD có thể đề xuất hoặc để nhóm sinh viên tự chọn nếu chưa có nhóm đăng ký trước. 
+Khi gửi về Phòng đào tạo, GVHD và nhóm sinh viên cần thống nhất và ghi rõ mục này. 
+Đối với đề tài có định hướng nghiên cứu khoa học, cần mô tả rõ phương pháp, thuật toán, mô hình, baseline và cách đánh giá.)
+- Software Development Technologies:
+- Front-end:
+- Back-end:
+- Database:
+- Cloud/Deployment:
+- Version Control:
+- CI/CD Tools:
+- Other tools/platforms:
+- Research Methodology:
+- Proposed approach: For all report categories, screen out invalid submissions (photos that do not show a real scene, are unreadable or are repeated) and group reports of the same site by location, category and photo. For the pilot category (environmental sanitation), identify the waste in the photos and derive a priority level (Low / Medium / High) from the variety of waste and the presence of special waste (hazardous, medical, construction, bulky items).
+- Dataset / case study / source code repository: Field report photos collected in Hoa Xuan Ward, labeled with category, site and validity; photos in the pilot category are also labeled with waste types and priority levels and supplemented by publicly available waste image data.
+- Baseline or comparison method: Compare the system's priority levels with levels assessed manually by ward officers for the pilot category; compare grouping by location only with grouping by location, category and photo; compare handling time with the ward's current process where records are available.
+- Evaluation metrics: Agreement of priority levels with manual assessment; accuracy of report grouping and invalid-report screening; processing time per report; average time from submission to completion.
+- Experimental setup: Evaluation on reports collected in Hoa Xuan Ward that were not used during development; thresholds are adjusted with feedback from ward officers during pilot use.
+3.3. Research Orientation
+3.3.1. Research problem
+Briefly describe the scientific or practical problem that the project aims to address.
+Residents' photos vary in category and quality, many reports describe the same site, and some submissions are invalid. Reviewing them manually to decide what to handle first is slow. The project studies how to automatically screen invalid reports, recognize reports of the same site submitted by different people, and estimate the priority of environmental sanitation reports from their photos.
+3.3.2. Research objectives
+The project is expected to achieve the following research objectives:
+- Recognize common and special waste types in photos of environmental sanitation reports taken in Hoa Xuan Ward.
+- Define and validate priority criteria for environmental sanitation reports based on the variety of waste and special waste types.
+- Develop a method to group reports of the same site using location, category and photos, applicable to all categories.
+- Develop a screening step for invalid or repeated submissions in all report categories.
+3.3.3. Proposed research direction
+| Machine Learning | ☒ |  | Software Engineering | ☒ | Data Analytics: | ☐ |
+| Computer Vision | ☒ |  | Natural Language Processing | ☐ | N/A: | ☐ |
+3.3.4. Expected research outputs
+The expected research outputs may include:
+- A report screening and grouping component for all categories, a waste recognition component for the pilot category, and their evaluation results.
+- A dataset of field report photos in Hoa Xuan Ward labeled with category, site and validity, including waste types and priority levels for the pilot category.
+- Priority criteria and a report-grouping method with evaluated thresholds.
+- A capstone report describing the methods, experiments and results.
+3.4. Summarize the contents to be researched and the expected outputs of the project:
+Briefly Summarize the content to be researched and what the expected output will be.
+Research content: screening of invalid reports and grouping of duplicate reports for all categories, priority assessment from report photos for the pilot category (environmental sanitation), and the ward's workflow for receiving, assigning and handling field reports from residents.
+Expected outputs:
+- A mobile application for residents (submit field reports by category and track them, receive notifications, register as volunteers) and for task assignees (accept or reject tasks, submit completion evidence).
+- A web application for Admin (review, assignment, approval, report category management, hotspot map, dashboard, statistics) and ward officers (handling reports assigned to them).
+- An analysis module integrated into the system for report screening, priority assessment and grouping.
+- A dataset and an evaluation report.
+| Website application: | ☒ |  | Mobile application: | ☒ | iOT: | ☐ |
+| Game: | ☐ |  | Research: | ☒ | N/A: | ☐ |
+3.5. Expected features
+- Account Registration: Residents must register an account before submitting reports; staff accounts are created by Admin.
+- Field Report Submission: Submit a report with a category, a description and one or more photos taken directly or chosen from the gallery; location comes from GPS, the photo's EXIF data, or a pin on the map. Report categories (for example environmental sanitation, urban order, roads and drainage, street lighting) are managed by Admin.
+- Automatic Report Analysis: Screen invalid photos and group reports of the same site for all categories; assess the priority level (Low / Medium / High) for environmental sanitation reports. Reports in other categories receive their priority level from ward officers.
+- Report Review and Intake: Admin reviews the clearest report of each group, views other reports at the same location, splits wrongly grouped reports, decides on flagged images (removed 48 hours after upload), and rejects invalid reports with a reason sent to the reporter (removed within 48 hours).
+- Ward Officer Handling: Ward officers receive reports assigned by Admin, adjust the priority level, verify sites in the field, propose assignees or teams, contact residents for more information, monitor progress and inspect sites after handling.
+- Task Assignment: Admin assigns tasks to individuals or to a team with a team leader, and can set a deadline; overdue tasks are reported to Admin.
+- Task Acceptance and Rejection: Assignees accept a task (the report moves to In Progress) or reject it with a reason; if Admin accepts the reason the task is reassigned, otherwise the assignee continues.
+- Completion Evidence and Approval: One team member uploads mandatory after-handling photos; Admin approves (report Completed) or returns the task to the team for rework.
+- Status Tracking and Notifications: Reports go through four statuses (Submitted, Received, In Progress, Completed); reporters, including those of grouped reports, are notified at every status change.
+- Volunteer Registration: Residents apply to become volunteers; Admin verifies and approves or rejects the application and can suspend or revoke the volunteer role.
+- Hotspot Map, Dashboard and Statistics: Admin only: map of report density in the ward and statistics by category, status, priority, area, handling time, overdue and rejected tasks.
+3.6. Expected features
+3.6.1. AI Use Declaration
+The team shall select all applicable options:
+☐ No AI use is planned.
+☐ AI will support requirements analysis, design, implementation, testing, or documentation.
+☒ AI functionality will be integrated into the project’s software product.
+☒ AI models or algorithms will be developed, investigated, or evaluated as part of the project’s research.
+3.6.2. Purpose and Scope of AI Use
+Describe the planned AI-assisted activities, tools or models, expected outputs, and verification methods. Avoid general statements such as “using ChatGPT” or “using AI to write code” without specifying the tasks involved.
+| Activity | Proposed AI Tool or Model | Expected Output | Human Verification Method |
+| Report screening | Pretrained image model | Valid / flagged, with reason | Admin makes the final decision |
+| Priority assessment | Pretrained image model + priority rule | Low / Medium / High level (pilot category) | Ward officers can correct the level |
+| Duplicate grouping | Location and category filter + photo comparison | Groups of same-site reports | Admin can split wrong groups |
+3.6.3. AI Functionality or Research Component
+Complete this section only if the project integrates AI functionality or includes AI research.
+- Problem to be addressed by AI: Screen and group incoming reports in all categories quickly, and prioritize reports in the pilot category.
+- Proposed AI functionality or research objectives: See Section 3.5, feature 3.
+- Proposed models, algorithms, or AI services: Pretrained image models adapted by the team.
+- Data sources and permission to use the data: Photos collected in Hoa Xuan Ward and public waste image data for the pilot category, used under their licenses; rejected reports are kept only in anonymized form.
+- Implementation approach: Pretrained models adapted to the collected data and run on the project's own server; no external AI API.
+- Evaluation methods and criteria: See Section 3.2 (Evaluation metrics and Experimental setup).
+- Handling of incorrect AI outputs or service failures: Results are suggestions only: flagged images go to Admin, ward officers can correct priority levels, and Admin can split wrong groups. If analysis fails, reports are still accepted without it.
+If these details are already provided in Sections 3.2 or 3.3, refer to the relevant section and provide only additional information.
+| Supervisor (If have) / (Sign and full name) | Da Nang,       /     /2026 / On behalf of Registers / (Sign and full name) |
