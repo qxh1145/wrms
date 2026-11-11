@@ -2,10 +2,10 @@
 title: "PRD: WRMS"
 status: final
 created: 2026-10-23
-updated: 2026-11-02
+updated: 2026-11-11
 ---
 
-# PRD: WRMS – Hệ thống tiếp nhận, phân công và xử lý phản ánh hiện trường tại phường Hòa Xuân
+# PRD: WRMS – Hệ thống tiếp nhận, phân công và xử lý phản ánh hiện trường về môi trường sống tại phường Hòa Xuân
 
 ## 0. Mục đích tài liệu
 
@@ -19,7 +19,7 @@ PRD này dành cho nhóm 5 sinh viên SEP490, giảng viên hướng dẫn (GVHD
 Cách đọc:
 
 - Thuật ngữ ở §4 là bắt buộc. Mọi FR, UJ, SM dùng đúng các thuật ngữ đó.
-- Tính năng ở §5 xếp theo 12 nhóm nghiệp vụ, mỗi nhóm là một epic trên Jira. FR đánh số toàn cục, từ FR-1 đến FR-59. Các FR thêm sau bản nháp đầu (FR-42 trở đi) mang số nối tiếp và nằm trong nhóm nghiệp vụ của chúng, để giữ ID ổn định. ID đã bỏ không dùng lại.
+- Tính năng ở §5 xếp theo 12 nhóm nghiệp vụ, mỗi nhóm là một epic trên Jira. FR đánh số toàn cục, từ FR-1 đến FR-63. Các FR thêm sau bản nháp đầu (FR-42 trở đi) mang số nối tiếp và nằm trong nhóm nghiệp vụ của chúng, để giữ ID ổn định. ID đã bỏ không dùng lại.
 - **Sửa ngày 29/10/2026** theo `chot-2026-10-29.md` (quyết định 2, 3, 5, 12 đến 15) và `de-xuat-phan-luong-2026-10-29.md`:
   - WRMS chỉ tiếp nhận và điều phối trong phường. Bỏ FR-46 (Danh bạ cơ quan), FR-47 (phân loại chờ chuyển), FR-48 (Phiếu chuyển), FR-49 (Phản hồi của cơ quan), trạng thái Transferred và mẫu PC-01. Việc vượt thẩm quyền do phường tự chuyển lên cấp trên, ngoài hệ thống; trong WRMS chỉ còn đóng Nhóm với lý do "Ngoài thẩm quyền" (FR-56, trạng thái Closed).
   - Chất thải nguy hại: giữ Cờ, Cảnh báo đỏ, khóa giao việc (FR-50 đến FR-53). Bỏ Hồ sơ nguy hại 5 bước (FR-54), BB-01, BB-02. FR-55 rút gọn thành một bước kết thúc xử lý nguy hại.
@@ -30,18 +30,32 @@ Cách đọc:
   - Người dân dùng **Zalo Mini App** (không còn app mobile chung). Cán bộ phòng ban dùng **app mobile riêng**. Cán bộ phường, Lãnh đạo, Admin dùng web.
   - Bỏ lấy vị trí từ EXIF (FR-7): `chooseImage` của Zalo không trả EXIF.
   - Việc kiến trúc phải chốt cho app mobile: `chot-2026-10-29.md` mục 6 (A1 đến A7).
-  - Chưa sửa: đăng ký và định danh Người dân qua tài khoản Zalo (FR-1, FR-2); giao cho kiến trúc.
+  - Lúc đó chưa sửa đăng ký và định danh Người dân qua tài khoản Zalo (FR-1, FR-2); đã sửa ngày 11/11/2026.
   - Bản trước khi sửa: `prd.bak-truoc-app-mobile.md`.
+- **Sửa ngày 11/11/2026** để đưa nốt bốn quyết định ngày 29/10 trong `chot-2026-10-29.md` mà hai lần sửa trước chưa áp:
+  - Quyết định 1: phạm vi thu hẹp về môi trường sống, 5 Lĩnh vực (§1, §4, FR-4, §9, §10.1). Bỏ vỉa hè, đường, đèn chiếu sáng. UJ-1, UJ-4, UJ-6 đổi ví dụ.
+  - Quyết định 4: AI đọc nội dung ảnh chỉ cho hai Lĩnh vực Rác và vệ sinh môi trường, Thoát nước và vệ sinh khu dân cư. Ba Lĩnh vực còn lại dùng Loại phản ánh và từ khóa. Thêm bảng phạm vi AI theo Lĩnh vực ở §5.3 và FR-60 (Nhãn ảnh); sửa FR-10, FR-57, FR-58.
+  - Quyết định 6: thêm vai trò Lãnh đạo, chỉ xem (§3.1, §4, FR-61, NFR-4, UJ-10).
+  - Quyết định 7: theo dõi Người nhận qua ba mốc đã đọc, đã xử lý, đã trả lời công dân (FR-62), và nhắc khi Nhiệm vụ chưa được đọc (FR-63).
+  - Bốn quyết định này ghi rất ngắn. Chỗ PRD phải tự diễn giải mang thẻ `[ASSUMPTION]` và có dòng ở §14 (câu 30 đến 33).
+  - Bản trước khi sửa: commit `242eb33` trong git.
+- **Chốt ngày 11/11/2026** (người dùng trả lời 12 câu nhóm tự quyết; bảng ở §14.1):
+  - Người dân định danh bằng tài khoản Zalo, không mật khẩu, không SMS (FR-1, FR-2 viết lại). App mobile làm Android trước (NFR-7).
+  - Khu vực là ba địa bàn cũ; ranh giới là một file GeoJSON nhóm tự dựng (§4, FR-7).
+  - Cán bộ phường chụp ảnh hiện trường bằng web trên điện thoại (NFR-7). Ảnh bắt buộc với mọi Loại phản ánh (FR-6). Không làm mờ mặt, biển số trong v1 (§8.1).
+  - AI ảnh cho thoát nước chỉ gồm Nhãn ảnh và so ảnh khi Gom nhóm (§5.3). Giữ trạng thái Cancelled, dùng SM-3 và SM-4, không mở lại phản ánh đã Completed. Theo hướng mặc định ở §2.1.
 - `[ASSUMPTION: …]` đánh dấu chỗ PRD tự suy ra, chưa ai xác nhận. Tất cả có trong Chỉ mục giả định ở §15, chia theo người cần xác nhận. `[NOTE FOR PM: …]` đánh dấu điểm căng cần nhóm quyết định; mỗi điểm có một dòng ở §14. Thẻ giữ tiếng Anh để công cụ ở bước sau tìm được.
 - `[CXM-1]` đến `[CXM-4]` đánh dấu yêu cầu phụ thuộc vào câu trả lời của UBND phường cho bốn câu ở mục "Cần xác minh với phường" của brief. Xem §2.
 
 ## 1. Tầm nhìn (v1)
 
-WRMS là công cụ để UBND phường Hòa Xuân xử lý phản ánh hiện trường của người dân, từ lúc người dân gửi qua app đến lúc cán bộ phường nghiệm thu xong. Người dân chụp ảnh rác thải trái phép, đường hỏng, cống nghẹt hay đèn đường hỏng, gửi kèm vị trí, và biết phản ánh của mình đang ở bước nào. Cán bộ phường có một chỗ duy nhất để duyệt, đặt mức ưu tiên, giao việc có hạn chót cho cán bộ phòng ban, rồi nghiệm thu bằng ảnh trước và sau.
+WRMS là công cụ để UBND phường Hòa Xuân xử lý phản ánh hiện trường của người dân, từ lúc người dân gửi qua app đến lúc cán bộ phường nghiệm thu xong. Người dân chụp ảnh rác đổ trộm, cống nghẹt, nước thải, khói đốt rác hay nơi phát tiếng ồn, gửi kèm vị trí, và biết phản ánh của mình đang ở bước nào. Cán bộ phường có một chỗ duy nhất để duyệt, đặt mức ưu tiên, giao việc có hạn chót cho cán bộ phòng ban, rồi nghiệm thu bằng ảnh trước và sau. Lãnh đạo phường xem được mọi phản ánh và biết việc nào đang chậm.
+
+Phạm vi v1 là phản ánh về môi trường sống, gồm 5 Lĩnh vực: Rác và vệ sinh môi trường; Ô nhiễm nguồn nước; Không khí và mùi hôi; Tiếng ồn; Thoát nước và vệ sinh khu dân cư. Vỉa hè, đường và đèn chiếu sáng nằm ngoài phạm vi (quyết định 1 ngày 29/10/2026, theo mentor).
 
 Luận điểm của sản phẩm: với các phản ánh đi qua app WRMS, cán bộ phường bỏ được ba việc làm tay. Một là gom các phản ánh trùng một hiện trường. Hai là đôn đốc việc bằng miệng. Ba là khép kín vòng báo lại kết quả; hiện chưa rõ ai báo lại, báo cho ai, và người dân có biết không `[CXM-3]`. WRMS không phải thêm một kênh báo. Đà Nẵng đã có Góp ý Đà Nẵng, tổng đài 1022 và Zalo, và WRMS không thay hay nhận phản ánh từ các kênh đó. WRMS cũng không có lợi thế công nghệ độc quyền. Lợi thế dự kiến là thiết kế sát quy trình của một phường cụ thể, và điều này chỉ đúng sau khi nhóm làm việc với phường.
 
-Luận điểm này hiện là giả thuyết. Nhóm chưa làm việc với UBND phường, và dự án mới là ý tưởng chờ phường duyệt. Phần AI chấm mức ưu tiên từ ảnh cho lĩnh vực vệ sinh môi trường là phần nghiên cứu của đồ án, chưa phải nhu cầu phường đã xác nhận. Mục tiêu của nhóm không dừng ở bảo vệ đồ án: nhóm muốn UBND phường thật sự dùng WRMS sau khi bảo vệ, và điều đó kéo theo câu hỏi ai vận hành sau 04/2027 (§11).
+Luận điểm này hiện là giả thuyết. Nhóm chưa làm việc với UBND phường, và dự án mới là ý tưởng chờ phường duyệt. Phần AI chấm mức ưu tiên từ ảnh cho Lĩnh vực Rác và vệ sinh môi trường là phần nghiên cứu của đồ án, chưa phải nhu cầu phường đã xác nhận. Mục tiêu của nhóm không dừng ở bảo vệ đồ án: nhóm muốn UBND phường thật sự dùng WRMS sau khi bảo vệ, và điều đó kéo theo câu hỏi ai vận hành sau 04/2027 (§11).
 
 Mục này chỉ mô tả sản phẩm v1. Tầm nhìn dài hạn chưa xác định; nhóm bổ sung sau buổi làm việc với phường.
 
@@ -52,15 +66,15 @@ Trước 01/01/2027 nhóm cần một buổi làm việc với UBND phường H�
 | Nhãn | Câu hỏi | Giả định PRD đang dùng | Nếu câu trả lời khác | Yêu cầu mang nhãn |
 | --- | --- | --- | --- | --- |
 | CXM-1 | Lượng phản ánh mỗi tháng, qua kênh nào, bao nhiêu phản ánh trùng | Đủ phản ánh trùng để gom nhóm và xếp ưu tiên có ích cho phường. Ước lượng thô từ số liệu 1022 cho thấy chỉ khoảng 9 phản ánh mỗi tháng cho mỗi đơn vị cấp xã | Nếu lượng thấp như ước lượng: gom nhóm và chấm ưu tiên chỉ còn giá trị nghiên cứu; bản đồ điểm nóng và dashboard ít dữ liệu; mục tiêu SM phải hạ; nên xem lại thứ tự cắt giảm ở §10.3 | §3.1, FR-10, FR-11, FR-13, FR-14, FR-36, FR-37, NFR-3, SM-1, SM-2, SM-R4 |
-| CXM-2 | Ai xử lý ngoài hiện trường theo từng lĩnh vực | Các Đơn vị xử lý của phường (FR-5): Phòng Kinh tế, Hạ tầng và Đô thị chủ trì mọi phản ánh môi trường; Trung tâm Cung ứng dịch vụ sự nghiệp công cử người ra hiện trường; Trạm Y tế, Phòng Văn hóa - Xã hội phối hợp theo bảng quy tắc phân luồng (FR-57). Công an phường không thuộc UBND, chỉ phối hợp ngoài hệ thống (FR-59). Việc vượt thẩm quyền phường do phường tự chuyển lên cấp trên, ngoài hệ thống; WRMS chỉ đóng Nhóm "Ngoài thẩm quyền" (FR-56) | Nếu Trung tâm Cung ứng không ra hiện trường: bỏ các dòng "luôn luôn" trong bảng quy tắc. Nếu Trạm Y tế hoặc Công an không dùng hệ thống: đặt chế độ phối hợp ngoài hệ thống cho đơn vị đó. Nếu phường muốn giao việc và theo dõi đơn vị ngoài phường: vẫn ngoài phạm vi (§9) | §3.2, §5.6, §5.7, FR-3, FR-5, FR-23 đến FR-30, FR-33, FR-39, FR-40, FR-42, FR-43, FR-56 đến FR-59, SM-3, UJ-3, UJ-4, UJ-7, UJ-8, §9 |
+| CXM-2 | Ai xử lý ngoài hiện trường theo từng lĩnh vực | Các Đơn vị xử lý của phường (FR-5): Phòng Kinh tế, Hạ tầng và Đô thị chủ trì mọi phản ánh môi trường; Trung tâm Cung ứng dịch vụ sự nghiệp công cử người ra hiện trường; Trạm Y tế, Phòng Văn hóa - Xã hội phối hợp theo bảng quy tắc phân luồng (FR-57). Công an phường không thuộc UBND, chỉ phối hợp ngoài hệ thống (FR-59). Việc vượt thẩm quyền phường do phường tự chuyển lên cấp trên, ngoài hệ thống; WRMS chỉ đóng Nhóm "Ngoài thẩm quyền" (FR-56) | Nếu Trung tâm Cung ứng không ra hiện trường: bỏ các dòng "luôn luôn" trong bảng quy tắc. Nếu Trạm Y tế hoặc Công an không dùng hệ thống: đặt chế độ phối hợp ngoài hệ thống cho đơn vị đó. Nếu phường muốn giao việc và theo dõi đơn vị ngoài phường: vẫn ngoài phạm vi (§9) | §3.2, §5.6, §5.7, FR-3, FR-5, FR-23 đến FR-30, FR-33, FR-39, FR-40, FR-42, FR-43, FR-56 đến FR-59, FR-62, FR-63, SM-3, UJ-3, UJ-4, UJ-7, UJ-8, UJ-10, §9 |
 | CXM-3 | Hiện nay ai báo lại kết quả, cho ai, bằng cách nào, người dân có biết không | Vòng xử lý chưa khép kín; người dân không biết kết quả | Nếu phường đã có cách báo lại ổn: giá trị của nghiệm thu bằng ảnh và tra cứu tiến độ giảm; SM-4, SM-5 không còn là kết quả chính | §1, §3.1, §5.8, FR-29, FR-30, FR-31, FR-32, SM-4, SM-5, UJ-1, UJ-5 |
-| CXM-4 | Ai trong UBND phường dùng WRMS hằng ngày, phòng ban nào, bao nhiêu người; phường có người làm IT cho vai trò Admin không | Có một hoặc vài cán bộ phường điều phối; có một người làm IT, khác với cán bộ phường, giữ vai trò Admin | Nếu nhiều cán bộ phường: cần quy tắc chia phản ánh. Nếu không có người IT: vai trò Admin do cán bộ phường hoặc nhóm giữ. Khi đó một người cần hai tài khoản hoặc một tài khoản nhiều vai trò (§4 đang giả định mỗi tài khoản một vai trò). Nếu sinh viên giữ Admin, NFR-4 là thứ duy nhất ngăn nhóm đọc dữ liệu cá nhân của người dân; rủi ro vận hành sau 04/2027 tăng | §3.1, FR-2, FR-3, FR-4, FR-18, FR-22, FR-34, NFR-3, NFR-4, §8.1, UJ-2, UJ-6, §11 |
+| CXM-4 | Ai trong UBND phường dùng WRMS hằng ngày, phòng ban nào, bao nhiêu người; phường có người làm IT cho vai trò Admin không | Có một hoặc vài cán bộ phường điều phối; có một người làm IT, khác với cán bộ phường, giữ vai trò Admin | Nếu nhiều cán bộ phường: cần quy tắc chia phản ánh. Nếu không có người IT: vai trò Admin do cán bộ phường hoặc nhóm giữ. Khi đó một người cần hai tài khoản hoặc một tài khoản nhiều vai trò (§4 đang giả định mỗi tài khoản một vai trò). Nếu sinh viên giữ Admin, NFR-4 là thứ duy nhất ngăn nhóm đọc dữ liệu cá nhân của người dân; rủi ro vận hành sau 04/2027 tăng | §3.1, FR-2, FR-3, FR-4, FR-18, FR-22, FR-34, FR-61, NFR-3, NFR-4, §8.1, UJ-2, UJ-6, UJ-10, §11 |
 
 ### 2.1 Nếu chưa có câu trả lời hoặc phường không duyệt
 
-UX và kiến trúc khởi động từ 01/01/2027 dù đã có buổi làm việc với phường hay chưa. Hướng mặc định dưới đây do PRD đề xuất; nhóm và GVHD quyết định. `[ASSUMPTION: nhóm và GVHD chấp nhận hướng mặc định này]`
+UX và kiến trúc khởi động từ 01/01/2027 dù đã có buổi làm việc với phường hay chưa. Hướng mặc định dưới đây do PRD đề xuất; nhóm chấp nhận ngày 11/11/2026 (§14.1, câu 15), còn chờ GVHD. `[ASSUMPTION: GVHD chấp nhận hướng mặc định này]`
 
-- Nếu đến 01/01/2027 chưa có buổi làm việc: nhóm thiết kế theo cột "Giả định PRD đang dùng" ở bảng trên. Đơn vị xử lý, bảng quy tắc phân luồng, Hạn chót mặc định, Lĩnh vực, Loại phản ánh, Lĩnh vực thí điểm và mốc nhắc hạn nằm trong danh mục hoặc cấu hình, không viết cứng, để đổi được khi có câu trả lời.
+- Nếu đến 01/01/2027 chưa có buổi làm việc: nhóm thiết kế theo cột "Giả định PRD đang dùng" ở bảng trên. Đơn vị xử lý, bảng quy tắc phân luồng, Hạn chót mặc định, Lĩnh vực, Loại phản ánh, Lĩnh vực thí điểm, mốc nhắc hạn và hạn đọc nằm trong danh mục hoặc cấu hình, không viết cứng, để đổi được khi có câu trả lời.
 - Sau một mốc nhất định thì không đổi phạm vi theo câu trả lời của phường nữa. `[NOTE FOR PM: nhóm và GVHD đặt mốc cuối được đổi phạm vi]`
 - Nếu phường không duyệt thí điểm: nhóm vẫn xây phạm vi MVP ở §10.1, đánh giá phần nghiên cứu trên tập ảnh tự chụp (SM-R1 đến SM-R3), và demo trước hội đồng bằng dữ liệu mẫu và đóng vai. Các lựa chọn khác là thu hẹp về phần nghiên cứu, hoặc tìm phường khác.
 
@@ -70,6 +84,8 @@ Cả 16 quyết định nghiệp vụ trong addendum của brief do nhóm tự c
 
 Ngày 29/10/2026, theo mentor và người dùng (`chot-2026-10-29.md`, quyết định 2, 5, 12, 13): WRMS chỉ tiếp nhận và điều phối giữa các Đơn vị xử lý của phường, phân luồng bằng bảng quy tắc, một Nhóm có nhiều Nhiệm vụ song song. Quyết định 10 của brief ("không có Phòng ban xử lý mặc định") được thay. Việc vượt thẩm quyền phường do phường tự chuyển lên cấp trên, ngoài hệ thống; WRMS không lưu phiếu chuyển, không theo dõi kết quả ở cấp trên. Luồng chuyển cơ quan và Hồ sơ nguy hại thêm ngày 23/10 đã bỏ. `[NOTE FOR PM: báo GVHD cùng các thay đổi ở §11]`
 
+Cũng theo `chot-2026-10-29.md`, đưa vào PRD ngày 11/11/2026: phạm vi thu hẹp về 5 Lĩnh vực môi trường sống (quyết định 1, mentor); AI đọc nội dung ảnh chỉ cho rác và thoát nước (quyết định 4, nhóm và mentor); vai trò Lãnh đạo chỉ xem (quyết định 6) và theo dõi người phụ trách qua ba mốc đã đọc, đã xử lý, đã trả lời công dân (quyết định 7). Quyết định 6 và 7 theo tin nhắn của phường qua anh Tài; cách PRD ánh xạ "người phụ trách" và ba mốc vào Nhiệm vụ và Nhóm phản ánh là diễn giải của nhóm, chờ phường xác nhận (§14, câu 32, 33).
+
 ## 3. Người dùng
 
 ### 3.1 Jobs To Be Done
@@ -78,6 +94,7 @@ Ngày 29/10/2026, theo mentor và người dùng (`chot-2026-10-29.md`, quyết 
 - **Cán bộ phòng ban.** Khi được giao việc, tôi muốn biết rõ việc gì, ở đâu, hạn chót khi nào, và nộp ảnh minh chứng ngay từ điện thoại ở hiện trường. Khi việc không đúng chuyên môn, tôi muốn từ chối kèm lý do thay vì bỏ ngỏ. Khi tới hiện trường mà thấy kim tiêm, hóa chất, pin hay ắc quy, tôi muốn báo ngay và dừng việc mà không bị tính trễ hạn.
 - **Người dân.** Khi thấy một vấn đề ở nơi công cộng, tôi muốn báo trong vài phút bằng ảnh và vị trí, rồi biết phản ánh được xử lý tới đâu mà không phải hỏi lại. Nếu phản ánh ngoài thẩm quyền phường, tôi muốn được báo rõ để không chờ. Theo brief, vấn đề phía người dân có thể là không biết có kênh hoặc không tin phản ánh được xử lý, chưa chắc là thiếu kênh. Không ai trong nhóm từng gửi phản ánh hiện trường, và trước khi viết brief nhóm cho rằng chưa có kênh nào.
 - **Admin (IT của UBND phường).** `[CXM-4]` Tôi muốn tạo tài khoản cán bộ, quản lý danh mục và phòng ban mà không phải đụng vào nghiệp vụ xử lý phản ánh.
+- **Lãnh đạo (Chủ tịch, Phó Chủ tịch UBND phường).** `[CXM-4]` Tôi muốn xem mọi phản ánh và biết việc nào đang chậm, ở đơn vị nào, người nhận việc đã đọc và xử lý chưa, mà không phải hỏi từng phòng. Tôi chỉ xem, không thao tác. Nhu cầu này theo tin nhắn của phường qua anh Tài (quyết định 6, 7 ngày 29/10); chưa có lãnh đạo nào kể lại cách họ theo dõi hiện nay.
 
 ### 3.2 Không phải người dùng (v1)
 
@@ -88,22 +105,22 @@ Ngày 29/10/2026, theo mentor và người dùng (`chot-2026-10-29.md`, quyết 
 
 ### 3.3 Hành trình chính
 
-Các hành trình dưới đây dựng lại từ luồng 5 bước trong brief. Chưa có cán bộ phường thật kể lại một phiên làm việc, và nhân vật là hư cấu. `[ASSUMPTION: UJ-1 đến UJ-9 là hành trình giả định; cần kiểm lại sau buổi làm việc với phường]`
+Các hành trình dưới đây dựng lại từ luồng 5 bước trong brief. Chưa có cán bộ phường thật kể lại một phiên làm việc, và nhân vật là hư cấu. `[ASSUMPTION: UJ-1 đến UJ-10 là hành trình giả định; cần kiểm lại sau buổi làm việc với phường]`
 
 **UJ-1. Chị Lan báo một đống xà bần đổ trộm và biết nó đã được dọn.** `[CXM-3]`
-Chị Lan bán hàng ở chợ. Chị đi ngang bãi đất trống gần nhà và thấy một đống xà bần lẫn nệm cũ mới đổ trộm. Chị đã có tài khoản Người dân. Chị mở app, chọn lĩnh vực Vệ sinh môi trường, loại "Rác thải trái phép", chụp hai ảnh, gõ một dòng mô tả. App lấy vị trí từ GPS và hiện ghim trên bản đồ để chị xác nhận. Chị đồng ý cho phường xử lý ảnh và vị trí, rồi gửi. App báo đã nhận ngay, không chờ AI. Hai ngày sau chị nhận thông báo phản ánh chuyển In Progress, rồi Completed kèm ảnh hiện trường sau khi dọn. **Edge case:** chị gửi một ảnh chụp từ hôm qua khi GPS đang tắt; Mini App yêu cầu chị ghim vị trí trên bản đồ. Nếu vị trí nằm ngoài phường Hòa Xuân, app không cho gửi và giải thích lý do.
+Chị Lan bán hàng ở chợ. Chị đi ngang bãi đất trống gần nhà và thấy một đống xà bần lẫn nệm cũ mới đổ trộm. Chị đã có tài khoản Người dân. Chị mở app, chọn Lĩnh vực Rác và vệ sinh môi trường, loại "Đổ rác, xà bần trái phép", chụp hai ảnh, gõ một dòng mô tả. App lấy vị trí từ GPS và hiện ghim trên bản đồ để chị xác nhận. Chị đồng ý cho phường xử lý ảnh và vị trí, rồi gửi. App báo đã nhận ngay, không chờ AI. Hai ngày sau chị nhận thông báo phản ánh chuyển In Progress, rồi Completed kèm ảnh hiện trường sau khi dọn. **Edge case:** chị gửi một ảnh chụp từ hôm qua khi GPS đang tắt; Mini App yêu cầu chị ghim vị trí trên bản đồ. Nếu vị trí nằm ngoài phường Hòa Xuân, app không cho gửi và giải thích lý do.
 Realizes FR-1, FR-6, FR-7, FR-8, FR-31, FR-32, FR-44.
 
 **UJ-2. Anh Minh duyệt hàng chờ buổi sáng.** `[CXM-4]`
-Anh Minh là cán bộ UBND phường được giao điều phối phản ánh hiện trường. Đầu giờ sáng anh mở WRMS trên web. Hàng chờ có sáu nhóm phản ánh mới, sắp theo mức ưu tiên. Nhóm đầu có ba phản ánh về cùng đống xà bần, gồm phản ánh của chị Lan; AI gợi ý mức Cao vì phát hiện rác xây dựng và rác cồng kềnh (Mức gợi ý là phần nghiên cứu; anh có thể bỏ qua). Anh xem phản ánh đại diện, lướt hai phản ánh còn lại, giữ mức Cao. Ở một nhóm khác, AI đề xuất gom hai phản ánh cống nghẹt cách nhau hai con hẻm; anh bác đề xuất gom. Một phản ánh có ảnh bị gắn cờ vì là ảnh chụp màn hình; anh từ chối kèm lý do. Với nhóm xà bần, anh tiếp nhận, rồi giao nhiệm vụ cho một nhóm xử lý hai người của một phòng ban, chọn anh Tuấn làm trưởng nhóm, hạn chót sau hai ngày. **Edge case:** AI Module lỗi lúc đêm; các phản ánh mới vẫn có trong hàng chờ với nhãn "chưa phân tích", và anh tự đặt mức ưu tiên.
-Realizes FR-9, FR-10, FR-11, FR-12, FR-13, FR-14, FR-15, FR-16, FR-17, FR-18, FR-19, FR-24, FR-58.
+Anh Minh là cán bộ UBND phường được giao điều phối phản ánh hiện trường. Đầu giờ sáng anh mở WRMS trên web. Hàng chờ có sáu nhóm phản ánh mới, sắp theo mức ưu tiên. Nhóm đầu có ba phản ánh về cùng đống xà bần, gồm phản ánh của chị Lan; AI gợi ý mức Cao vì phát hiện rác xây dựng và rác cồng kềnh (Mức gợi ý là phần nghiên cứu; anh có thể bỏ qua). Anh xem phản ánh đại diện, lướt hai phản ánh còn lại, giữ mức Cao. Ở một nhóm khác, AI đề xuất gom hai phản ánh cống nghẹt cách nhau hai con hẻm; anh bác đề xuất gom. Một phản ánh loại "Rác tồn đọng" có ảnh chụp miệng cống ngập nước; hệ thống gợi ý đổi sang loại "Cống, mương tắc" theo Nhãn ảnh, và anh đồng ý. Một phản ánh có ảnh bị gắn cờ vì là ảnh chụp màn hình; anh từ chối kèm lý do. Với nhóm xà bần, anh tiếp nhận, rồi giao nhiệm vụ cho một nhóm xử lý hai người của một phòng ban, chọn anh Tuấn làm trưởng nhóm, hạn chót sau hai ngày. **Edge case:** AI Module lỗi lúc đêm; các phản ánh mới vẫn có trong hàng chờ với nhãn "chưa phân tích", và anh tự đặt mức ưu tiên.
+Realizes FR-9, FR-10, FR-11, FR-12, FR-13, FR-14, FR-15, FR-16, FR-17, FR-18, FR-19, FR-24, FR-58, FR-60.
 
 **UJ-3. Anh Tuấn dọn xong và bị trả lại một lần.** `[CXM-2]`
 Anh Tuấn là cán bộ một phòng ban của phường, làm việc ngoài hiện trường bằng điện thoại. Anh nhận thông báo có nhiệm vụ mới, mở app, xem ảnh và vị trí, hạn chót, thành viên nhóm. Anh chấp nhận; phản ánh chuyển In Progress và chị Lan được báo. Chiều hôm sau, 24 giờ trước hạn chót, app nhắc anh nhiệm vụ sắp quá hạn. Anh cho người dọn, chụp ba ảnh sau xử lý và nộp minh chứng. Anh Minh xem và trả lại vì còn sót nệm cũ ở góc bãi. Anh Tuấn nhận thông báo kèm lý do, quay lại dọn nốt, nộp lại. Thành viên còn lại của nhóm chỉ xem và nhận thông báo.
 Realizes FR-26, FR-29, FR-30, FR-33, FR-39, FR-42, FR-44.
 
 **UJ-4. Anh Tuấn từ chối một nhiệm vụ không đúng chuyên môn.** `[CXM-2]`
-Anh Tuấn được giao sửa một đèn đường hỏng. Phòng của anh không có thiết bị làm việc trên cao. Anh từ chối nhiệm vụ và ghi lý do. Anh Minh nhận thông báo, xét lý do, chấp nhận và giao lại cho cán bộ phòng ban khác. Anh Tuấn được báo kết quả xét. **Edge case:** nếu anh Minh không chấp nhận lý do, nhiệm vụ trở về anh Tuấn và anh phải tiếp tục.
+Anh Tuấn được giao thông một đoạn cống tắc. Đơn vị của anh không có xe hút bùn và thiết bị thông cống. Anh từ chối nhiệm vụ và ghi lý do. Anh Minh nhận thông báo, xét lý do, chấp nhận và giao lại cho cán bộ phòng ban khác. Anh Tuấn được báo kết quả xét. **Edge case:** nếu anh Minh không chấp nhận lý do, nhiệm vụ trở về anh Tuấn và anh phải tiếp tục.
 Realizes FR-23, FR-25, FR-27, FR-28, FR-33, FR-34.
 
 **UJ-5. Anh Minh nghiệm thu và cả ba người gửi đều được báo.** `[CXM-3]`
@@ -111,20 +128,24 @@ Anh Minh nhận thông báo có minh chứng nộp lại cho nhóm xà bần. An
 Realizes FR-30, FR-32, FR-34.
 
 **UJ-6. Chị Hà thêm tài khoản cho cán bộ mới.** `[CXM-4]`
-Chị Hà làm IT tại UBND phường. Một cán bộ phòng ban mới chuyển về; chị tạo tài khoản vai trò Cán bộ phòng ban, gán vào phòng ban, và giao thông tin đăng nhập ban đầu cho cán bộ đó. Cùng buổi, chị thêm một Loại phản ánh dưới lĩnh vực Trật tự đô thị theo đề nghị của anh Minh. Chị không xem được nội dung phản ánh, bản đồ hay thống kê.
+Chị Hà làm IT tại UBND phường. Một cán bộ phòng ban mới chuyển về; chị tạo tài khoản vai trò Cán bộ phòng ban, gán vào phòng ban, và giao thông tin đăng nhập ban đầu cho cán bộ đó. Cùng buổi, chị thêm một Loại phản ánh dưới Lĩnh vực Tiếng ồn theo đề nghị của anh Minh. Chị không xem được nội dung phản ánh, bản đồ hay thống kê.
 Realizes FR-2, FR-3, FR-4, FR-5.
 
 **UJ-7. Anh Minh xử lý một nhiệm vụ quá hạn.** `[CXM-2]`
 Anh Minh mở danh sách nhiệm vụ, lọc theo quá hạn. Một nhiệm vụ cống nghẹt giao cho chị Thu đã quá hạn một ngày mà vẫn ở Assigned: chị Thu chưa chấp nhận cũng chưa từ chối. Anh gọi không được, nên thu hồi nhiệm vụ kèm lý do và giao lại cho anh Tuấn với hạn chót mới. Chị Thu và anh Tuấn đều nhận thông báo. Người gửi không nhận thông báo vì trạng thái phản ánh không đổi.
 Realizes FR-22, FR-23, FR-25, FR-40, FR-43.
 
-**UJ-8. Chị Mai báo tiếng karaoke lúc nửa đêm, và anh Khoa báo đường ống cấp nước thành phố vỡ.** `[CXM-2]`
-Chị Mai ở gần một quán karaoke. 23 giờ 20 chị gửi phản ánh loại "Karaoke, loa kéo", mô tả "hát to quá nửa đêm". Sáng hôm sau anh Minh mở Nhóm; hệ thống gợi ý Phòng Kinh tế, Hạ tầng và Đô thị chủ trì, Phòng Văn hóa - Xã hội phối hợp (lý do: loại "Karaoke, loa kéo"), và Công an phường phối hợp (lý do: gửi lúc 23:20, trong khung giờ đêm). Anh giữ nguyên gợi ý. Hệ thống tạo ba Nhiệm vụ: hai Nhiệm vụ giao cho cán bộ của hai phòng, mỗi Nhiệm vụ một Hạn chót mặc định 10 ngày làm việc; Nhiệm vụ của Công an ở chế độ phối hợp ngoài hệ thống. Anh gọi trực ban công an phường, rồi ghi "đã báo công an lúc 8:10". Ba ngày sau công an báo đã nhắc chủ quán; anh ghi kết quả và đóng Nhiệm vụ đó. Khi hai Nhiệm vụ còn lại được nghiệm thu, Nhóm sang Completed và chị Mai được báo. **Edge case:** anh Khoa báo một đoạn ống cấp nước trục chính bị vỡ. Anh Minh biết đường ống này do công ty cấp nước của thành phố quản lý. Anh đóng Nhóm với lý do "Ngoài thẩm quyền", ghi chú "đã báo đường dây nóng cấp nước". Anh Khoa nhận thông báo phản ánh ngoài thẩm quyền phường, kèm ghi chú đó. Phường tự theo dõi tiếp ngoài hệ thống.
+**UJ-8. Chị Mai báo tiếng karaoke lúc nửa đêm, và anh Khoa báo cá chết hàng loạt trên sông.** `[CXM-2]`
+Chị Mai ở gần một quán karaoke. 23 giờ 20 chị gửi phản ánh loại "Karaoke, loa kéo", mô tả "hát to quá nửa đêm". Sáng hôm sau anh Minh mở Nhóm; hệ thống gợi ý Phòng Kinh tế, Hạ tầng và Đô thị chủ trì, Phòng Văn hóa - Xã hội phối hợp (lý do: loại "Karaoke, loa kéo"), và Công an phường phối hợp (lý do: gửi lúc 23:20, trong khung giờ đêm). Anh giữ nguyên gợi ý. Hệ thống tạo ba Nhiệm vụ: hai Nhiệm vụ giao cho cán bộ của hai phòng, mỗi Nhiệm vụ một Hạn chót mặc định 10 ngày làm việc; Nhiệm vụ của Công an ở chế độ phối hợp ngoài hệ thống. Anh gọi trực ban công an phường, rồi ghi "đã báo công an lúc 8:10". Ba ngày sau công an báo đã nhắc chủ quán; anh ghi kết quả và đóng Nhiệm vụ đó. Khi hai Nhiệm vụ còn lại được nghiệm thu, Nhóm sang Completed và chị Mai được báo. **Edge case:** anh Khoa gửi phản ánh loại "Nước sông, hồ đổi màu, cá chết": cá chết nổi dọc một đoạn sông dài. Anh Minh thấy việc này vượt thẩm quyền của phường. Anh đóng Nhóm với lý do "Ngoài thẩm quyền", ghi chú "đã báo tổng đài 1022 của thành phố". Anh Khoa nhận thông báo phản ánh ngoài thẩm quyền phường, kèm ghi chú đó. Phường tự theo dõi tiếp ngoài hệ thống.
 Realizes FR-23, FR-31, FR-32, FR-56, FR-57, FR-58, FR-59.
 
 **UJ-9. Cô Hoa báo bãi rác có kim tiêm và can hóa chất, và không cán bộ nào phải tự dọn.**
 Cô Hoa dạy mầm non. Trên bãi đất trống cạnh trường có một đống rác mới đổ, trong đó cô thấy vài bơm kim tiêm và hai can nhựa dán nhãn hóa chất. Cô gửi phản ánh loại "Rác tồn đọng" và chụp từ xa theo lưu ý an toàn trên màn hình gửi. Vài phút sau, AI Module nhận diện chất thải y tế và chất thải nguy hại trong ảnh. Hệ thống gắn Cờ nguy hại chờ xác nhận và bật Cảnh báo đỏ trên web của mọi Cán bộ phường; Nhóm được ghim đầu Hàng chờ, và nút giao Nhiệm vụ bị khóa. Anh Minh xem ảnh và xác nhận Cờ; Nhóm sang Received, anh thành Cán bộ phụ trách. Cô Hoa nhận thông báo: hiện trường có dấu hiệu chất thải nguy hại, phường đang phối hợp đơn vị có chức năng, không tự tiếp xúc hay thu dọn. Anh Minh phối hợp với công an phường, tổ dân phố và đơn vị thu gom theo quy trình của phường, ngoài hệ thống. Khi đơn vị thu gom xong, anh ra hiện trường, chụp ảnh và ghi kết thúc xử lý nguy hại với kết luận "hiện trường sạch". Nhóm sang Completed; cô Hoa nhận ảnh sau xử lý. **Edge case 1:** AI không phát hiện, vì AI Module đang lỗi. Anh Tuấn được giao dọn một đống xà bần, tới nơi thì thấy một túi kim tiêm. Anh bấm "Báo chất thải nguy hại" kèm ảnh. Nhiệm vụ chuyển On Hold, Hạn chót ngừng tính, Cảnh báo đỏ bật. Anh Minh xác nhận Cờ; Nhiệm vụ tự chuyển Cancelled với lý do "phát hiện chất thải nguy hại", và anh Tuấn được báo rời hiện trường. Sau khi phần nguy hại được thu gom, anh Minh ghi kết thúc xử lý nguy hại với kết luận "còn chất thải thông thường"; Cờ chuyển Đã xử lý, nút giao Nhiệm vụ mở lại, và anh giao anh Tuấn dọn phần xà bần còn lại. **Edge case 2:** AI nhận nhầm chai nước rỗng là can hóa chất. Anh Minh xác minh tại chỗ, gỡ Cờ kèm lý do và ảnh; Nhóm quay về luồng thường.
 Realizes FR-6, FR-23, FR-31, FR-32, FR-33, FR-42, FR-43, FR-50, FR-51, FR-52, FR-53, FR-55.
+
+**UJ-10. Chị Phương xem việc chậm trước buổi giao ban.** `[CXM-4]` `[CXM-2]`
+Chị Phương là Phó Chủ tịch UBND phường. Sáng thứ Hai, trước buổi giao ban, chị đăng nhập WRMS trên web bằng tài khoản Lãnh đạo và mở danh sách Nhiệm vụ. Mỗi dòng cho thấy Đơn vị xử lý, Người nhận, đã đọc lúc nào, đã xử lý chưa, và Hạn chót. Chị lọc theo "chưa đọc": một Nhiệm vụ cống tắc giao từ chiều thứ Sáu, Người nhận chưa mở dù hệ thống đã nhắc. Chị mở Nhóm phản ánh, xem ảnh và lịch sử, rồi nhắc Trưởng phòng trong buổi giao ban. Chị không sửa được gì trên hệ thống: không có nút tiếp nhận, giao hay nghiệm thu. **Edge case:** chị mở một Nhóm đã Completed; chi tiết Nhóm ghi thời điểm hệ thống báo kết quả cho Người gửi.
+Realizes FR-61, FR-62, FR-63.
 
 ## 4. Thuật ngữ
 
@@ -132,26 +153,28 @@ Mọi phần còn lại của PRD dùng đúng các thuật ngữ này. Tên vai
 
 **Vai trò và actor phụ**
 
-- **Người dân (Resident)** — Cư dân tự đăng ký tài khoản, gửi phản ánh, theo dõi phản ánh của mình, bổ sung thông tin khi được yêu cầu. Dùng Zalo Mini App.
+- **Người dân (Resident)** — Cư dân dùng tài khoản Zalo của mình (FR-1), gửi phản ánh, theo dõi phản ánh của mình, bổ sung thông tin khi được yêu cầu. Dùng Zalo Mini App.
 - **Cán bộ phường (Ward Officer)** — Cán bộ UBND phường điều phối toàn bộ nghiệp vụ: duyệt, tiếp nhận, từ chối, gom và tách nhóm, đặt Mức cuối, giao và thu hồi nhiệm vụ, xét lý do từ chối, xác minh và kiểm tra hiện trường, nghiệm thu, xác nhận gợi ý phân luồng, đóng Nhóm ngoài thẩm quyền, xác nhận hoặc gỡ Cờ nguy hại, ghi kết thúc xử lý nguy hại, xem bản đồ điểm nóng, dashboard, thống kê. Dùng web.
 - **Cán bộ phụ trách** — Cán bộ phường được ghi là người phụ trách một Nhóm phản ánh (FR-18). Nhận thông báo về các Nhiệm vụ của Nhóm đó và là đầu mối trả lời Người gửi.
 - **Cán bộ phòng ban (Task Assignee)** — Cán bộ (công chức hoặc viên chức) của một Đơn vị xử lý trong phường, nhận nhiệm vụ và xử lý ngoài hiện trường. Dùng app mobile riêng cho cán bộ (ngoài Zalo). Không có tình nguyện viên. Không thu gom, vận chuyển chất thải nguy hại; khi thấy dấu hiệu chất thải nguy hại tại hiện trường thì báo qua app (FR-51) và dừng việc.
+- **Lãnh đạo (Ward Leader)** — Chủ tịch, Phó Chủ tịch UBND phường. Xem mọi Nhóm phản ánh, Nhiệm vụ, lịch sử, các mốc theo dõi Người nhận, bản đồ điểm nóng, dashboard, thống kê. Chỉ xem, không có thao tác nào làm đổi dữ liệu nghiệp vụ, danh mục hay cấu hình (FR-61). Dùng web. Thêm theo quyết định 6 ngày 29/10. Không liên quan tới "Leader" trong addendum, là trưởng nhóm sinh viên.
 - **Admin** — Người làm IT tại UBND phường, chỉ quản trị hệ thống: tài khoản, danh mục, Đơn vị xử lý, bảng quy tắc phân luồng, mốc thời gian. Không truy cập phản ánh, bản đồ điểm nóng, dashboard, thống kê. Dùng web.
 - **Tài khoản** — Mỗi tài khoản có đúng một vai trò. `[ASSUMPTION: mỗi tài khoản một vai trò; xem lại nếu CXM-4 cho thấy một người giữ hai vai trò]`
-- **AI Module** — Dịch vụ riêng, nằm ngoài ranh giới hệ thống, chạy khi có phản ánh mới: sàng lọc ảnh, gom nhóm, gợi ý mức ưu tiên, nhãn ảnh dùng cho phân luồng.
+- **AI Module** — Dịch vụ riêng, nằm ngoài ranh giới hệ thống, chạy khi có phản ánh mới: sàng lọc ảnh, gom nhóm, gợi ý mức ưu tiên, Nhãn ảnh để gợi ý sửa Loại phản ánh (FR-60). Thành phần nào chạy cho Lĩnh vực nào: bảng ở §5.3.
 - **Notification Service** — Dịch vụ bên ngoài đẩy thông báo tới điện thoại của Người dân và Cán bộ phòng ban.
 - **Map Service** — Dịch vụ bên ngoài cung cấp bản đồ, ghim vị trí và chuyển tọa độ thành địa chỉ.
-- **System Timer** — Tác vụ định kỳ trên server: nhắc sắp quá hạn, báo quá hạn, xóa dữ liệu hết hạn.
+- **System Timer** — Tác vụ định kỳ trên server: nhắc Nhiệm vụ chưa đọc, nhắc sắp quá hạn, báo quá hạn, xóa dữ liệu hết hạn.
 
 **Danh mục và tổ chức**
 
-- **Lĩnh vực (Domain)** — Cấp 1 của danh mục, ví dụ Vệ sinh môi trường, Trật tự đô thị, Đường và thoát nước, Chiếu sáng. Một Lĩnh vực có nhiều Loại phản ánh.
-- **Loại phản ánh (Category)** — Cấp 2 của danh mục, thuộc đúng một Lĩnh vực.
-- **Lĩnh vực thí điểm** — Lĩnh vực Vệ sinh môi trường, là Lĩnh vực duy nhất có Mức gợi ý. Xác định bằng mã cố định trong cấu hình, không bật tắt qua giao diện.
+- **Lĩnh vực (Domain)** — Cấp 1 của danh mục. v1 có 5 Lĩnh vực môi trường sống (quyết định 1 ngày 29/10): Rác và vệ sinh môi trường; Ô nhiễm nguồn nước; Không khí và mùi hôi; Tiếng ồn; Thoát nước và vệ sinh khu dân cư. Một Lĩnh vực có nhiều Loại phản ánh.
+- **Loại phản ánh (Category)** — Cấp 2 của danh mục, thuộc đúng một Lĩnh vực. Danh sách mặc định ở FR-4.
+- **Lĩnh vực thí điểm** — Lĩnh vực Rác và vệ sinh môi trường (PRD trước 11/11 gọi là Vệ sinh môi trường), là Lĩnh vực duy nhất có Mức gợi ý. Xác định bằng mã cố định trong cấu hình, không bật tắt qua giao diện.
+- **Lĩnh vực có AI ảnh** — Hai Lĩnh vực mà AI Module nhận ra được hiện trường trong ảnh: Rác và vệ sinh môi trường, Thoát nước và vệ sinh khu dân cư (quyết định 4 ngày 29/10). Với ba Lĩnh vực còn lại, hệ thống chỉ dùng Loại phản ánh, từ khóa trong mô tả và giờ gửi. Bảng ở §5.3.
 - **Đơn vị xử lý** — Phòng chuyên môn, đơn vị sự nghiệp của UBND phường, hoặc Công an phường, nhận Nhiệm vụ (FR-5). Danh mục mặc định theo `de-xuat-phan-luong-2026-10-29.md`: Phòng Kinh tế, Hạ tầng và Đô thị; Phòng Văn hóa - Xã hội; Trung tâm Cung ứng dịch vụ sự nghiệp công; Trạm Y tế; Công an phường. Mỗi Đơn vị xử lý có chế độ "trong hệ thống" hoặc "phối hợp ngoài hệ thống". PRD trước 29/10 gọi là Phòng ban. `[ASSUMPTION: mỗi Cán bộ phòng ban thuộc đúng một Đơn vị xử lý]`
 - **Gợi ý phân luồng** — Kết quả của bảng quy tắc (FR-57): một Đơn vị chủ trì, không hoặc nhiều Đơn vị phối hợp, kèm lý do. Cán bộ phường xác nhận hoặc sửa (FR-58).
 - **Đơn vị chủ trì** — Đơn vị xử lý mà Nhiệm vụ của nó quyết định nội dung trả lời Người gửi. Mỗi Nhóm có đúng một Đơn vị chủ trì khi đã giao việc.
-- **Khu vực** — Đơn vị địa bàn dưới phường, gán cho Phản ánh lúc gửi, dùng cho thống kê và cho dữ liệu còn giữ của phản ánh bị từ chối. Cấp chi tiết chưa chốt (§14, câu 6).
+- **Khu vực** — Đơn vị địa bàn dưới phường, gán cho Phản ánh lúc gửi, dùng cho thống kê và cho dữ liệu còn giữ của phản ánh bị từ chối. Có ba Khu vực, là ba địa bàn trước sáp nhập: Hòa Xuân, Hòa Châu, Hòa Phước (chốt 11/11/2026; §14.1, câu 6). Danh sách và ranh giới nằm trong cấu hình.
 
 **Phản ánh**
 
@@ -164,7 +187,8 @@ Mọi phần còn lại của PRD dùng đúng các thuật ngữ này. Tên vai
 - **Phản ánh đại diện** — Phản ánh được hiển thị đầu tiên cho một Nhóm (brief gọi là "phản ánh rõ nhất").
 - **Sàng lọc** — Bước AI Module đánh giá từng ảnh và gắn cờ ảnh có thể không hợp lệ.
 - **Ảnh bị gắn cờ** — Ảnh mà Sàng lọc đánh dấu là có thể không hợp lệ, kèm lý do. Chỉ Cán bộ phường quyết định ảnh đó có bị loại không.
-- **Gom nhóm** — Bước AI Module tạo Đề xuất gom dựa trên vị trí, Loại phản ánh và ảnh.
+- **Gom nhóm** — Bước AI Module tạo Đề xuất gom dựa trên vị trí, Loại phản ánh và ảnh. Ảnh chỉ được so ở hai Lĩnh vực có AI ảnh (FR-10).
+- **Nhãn ảnh** — Nhãn "rác" hoặc "thoát nước" AI Module gắn cho một ảnh khi nhận ra hiện trường thuộc một trong hai Lĩnh vực có AI ảnh (FR-60). Chỉ dùng để gợi ý Cán bộ phường sửa Loại phản ánh (FR-58); không là điều kiện của bảng quy tắc phân luồng. Khác với nhãn "nguy hại", "y tế" ở FR-50.
 - **Mức ưu tiên** — Một trong ba mức Thấp, Trung bình, Cao.
 - **Mức gợi ý** — Mức ưu tiên do AI Module đề xuất, chỉ có ở Lĩnh vực thí điểm.
 - **Mức cuối** — Mức ưu tiên do Cán bộ phường đặt, lưu riêng với Mức gợi ý, kèm người đặt và thời điểm.
@@ -183,6 +207,11 @@ Mọi phần còn lại của PRD dùng đúng các thuật ngữ này. Tên vai
 - **Hạn chót** — Thời điểm Cán bộ phường đặt khi giao Nhiệm vụ. Mặc định 10 ngày làm việc, 1 ngày làm việc nếu Mức cuối là Cao, theo QĐ 132/2026/QĐ-CTUBND của Đà Nẵng; cấu hình được, Cán bộ phường sửa được khi giao (quyết định 15 ngày 29/10). Thay cho bảng SLA (quyết định 8).
 - **Minh chứng** — Ảnh sau xử lý (bắt buộc ít nhất một) và ghi chú do Người nhận nộp.
 - **Nghiệm thu** — Quyết định cuối của Cán bộ phường về Minh chứng: duyệt hoặc trả lại làm lại kèm lý do.
+- **Người phụ trách (cách gọi của phường)** — Trong yêu cầu của phường ngày 29/10, "người phụ trách" là người của phòng nhận việc. PRD hiểu đó là Người nhận của Nhiệm vụ, không phải Cán bộ phụ trách (Cán bộ phường phụ trách một Nhóm); đây là giả định ở FR-62, chờ phường xác nhận (§14, câu 32). PRD không dùng "người phụ trách" làm thuật ngữ riêng.
+- **Mốc đã đọc** — Thời điểm Người nhận mở chi tiết Nhiệm vụ lần đầu trong app mobile (FR-62). Không dựa vào việc thông báo đẩy đã tới máy hay sự kiện xem tin của Zalo.
+- **Mốc đã xử lý** — Thời điểm nộp Minh chứng gần nhất của một Nhiệm vụ đang ở Submitted hoặc Approved (FR-62).
+- **Mốc đã trả lời công dân** — Thời điểm hệ thống gửi thông báo kết quả cho Người gửi khi Nhóm sang Completed hoặc Closed. Ghi trên Nhóm phản ánh, không trên Nhiệm vụ (FR-62).
+- **Hạn đọc** — Khoảng thời gian kể từ lúc giao; quá khoảng này mà Nhiệm vụ chưa có Mốc đã đọc thì Người nhận được nhắc (FR-63). Đặt trong cấu hình. Khác với Hạn chót.
 
 **Ngoài thẩm quyền và chất thải nguy hại (nhóm nghiệp vụ 12)**
 
@@ -255,29 +284,33 @@ Khi Nhóm có Cờ Chờ xác nhận còn Đề xuất gom chờ duyệt, Cán b
 
 ### 5.1 Tài khoản và danh mục (nhóm nghiệp vụ 1)
 
-**Mô tả:** Người dân tự đăng ký trên Zalo Mini App. Tài khoản cán bộ (Cán bộ phường, Cán bộ phòng ban, Admin) do Admin tạo; cán bộ không tự đăng ký. Admin quản lý danh mục 2 cấp, Đơn vị xử lý và bảng quy tắc phân luồng. Mọi vai trò dùng chung đăng nhập, đổi mật khẩu, hồ sơ cá nhân. Realizes UJ-1, UJ-6.
+**Mô tả:** Người dân vào bằng tài khoản Zalo trên Zalo Mini App, không mật khẩu. Tài khoản cán bộ (Cán bộ phường, Cán bộ phòng ban, Lãnh đạo, Admin) do Admin tạo; cán bộ không tự đăng ký. Admin quản lý danh mục 2 cấp, Đơn vị xử lý và bảng quy tắc phân luồng. Cán bộ dùng chung đăng nhập, đổi mật khẩu, hồ sơ cá nhân. Realizes UJ-1, UJ-6.
 
-#### FR-1: Người dân đăng ký tài khoản
+#### FR-1: Người dân có tài khoản qua Zalo
 
-Người dân có thể tự đăng ký tài khoản trên Zalo Mini App trước khi gửi phản ánh. Realizes UJ-1. `[NOTE FOR PM: Mini App định danh người dùng bằng tài khoản Zalo (getUserID, getPhoneNumber); cách ghép với tài khoản WRMS và việc còn cần mật khẩu hay không giao cho kiến trúc, chot-2026-10-29.md mục 2.2 và 4]`
+Người dân có thể dùng WRMS bằng tài khoản Zalo của mình trên Zalo Mini App, không cần mật khẩu riêng. Realizes UJ-1. Chốt ngày 11/11/2026 (§14.1, câu 8).
 
 **Consequences (testable):**
-- Người chưa đăng nhập không gửi được phản ánh; app chuyển sang màn hình đăng nhập hoặc đăng ký.
-- Mỗi số điện thoại chỉ gắn với một tài khoản Người dân. `[ASSUMPTION: số điện thoại là định danh đăng ký, vì Cán bộ phường cần liên hệ Người gửi]` Có xác minh số điện thoại hay không là câu hỏi mở vì gửi SMS có chi phí (§14, câu 8).
-- Tài khoản tạo qua đăng ký luôn có vai trò Người dân, không tự nâng lên vai trò khác.
+- Lần đầu Người dân mở Mini App, hệ thống tạo tài khoản Người dân gắn với ID Zalo của họ. Mỗi ID Zalo gắn với đúng một tài khoản Người dân. Những lần sau Người dân vào thẳng, không có màn hình đăng nhập.
+- Máy chủ phải xác thực danh tính Zalo, không tin ID do Mini App tự gửi lên. Cách làm (`getUserID`, hoặc `getAccessToken` kèm `appsecret_proof`) do kiến trúc chốt theo `chot-2026-10-29.md` mục 4.
+- Trước khi gửi phản ánh đầu tiên, Mini App xin số điện thoại qua `getPhoneNumber`, kèm lời giải thích mục đích: Cán bộ phường liên hệ khi cần. Người dân từ chối thì không gửi được phản ánh. `[ASSUMPTION: số điện thoại bắt buộc để gửi phản ánh, vì Cán bộ phường cần liên hệ Người gửi]`
+- Không có mật khẩu, không gửi SMS, không có bước xác minh số điện thoại riêng: số do Zalo cung cấp.
+- Nếu spike cho thấy `getPhoneNumber` không chạy trên bản Development chưa xét duyệt (`chot-2026-10-29.md` mục 4), Mini App cho Người dân tự nhập số điện thoại, không xác minh.
+- Tài khoản tạo theo cách này luôn có vai trò Người dân, không tự nâng lên vai trò khác.
+- Cách ánh xạ ID của Mini App với user_id theo OA, cần khi mở rộng sang thông báo qua OA, giao cho kiến trúc.
 
 #### FR-2: Đăng nhập, mật khẩu, hồ sơ cá nhân `[CXM-4]`
 
-Mọi vai trò có thể đăng nhập, đăng xuất, đổi mật khẩu và sửa hồ sơ cá nhân của mình. Người dân có thể khôi phục mật khẩu. Realizes UJ-6.
+Cán bộ phường, Cán bộ phòng ban, Lãnh đạo và Admin có thể đăng nhập bằng tài khoản và mật khẩu, đăng xuất, đổi mật khẩu và sửa hồ sơ cá nhân của mình. Người dân vào bằng tài khoản Zalo (FR-1) và sửa được hồ sơ của mình. Realizes UJ-6.
 
 **Consequences (testable):**
-- Người dân đăng nhập trên Zalo Mini App; Cán bộ phòng ban đăng nhập trên app mobile cho cán bộ; Cán bộ phường, Lãnh đạo và Admin đăng nhập trên web. Tài khoản đăng nhập sai nền tảng nhận thông báo lỗi nêu đúng nền tảng cần dùng.
+- Người dân dùng Zalo Mini App, không có mật khẩu và không có khôi phục mật khẩu (chốt 11/11/2026). Cán bộ phòng ban đăng nhập trên app mobile cho cán bộ; Cán bộ phường, Lãnh đạo và Admin đăng nhập trên web. Tài khoản cán bộ đăng nhập sai nền tảng nhận thông báo lỗi nêu đúng nền tảng cần dùng.
 - Tài khoản bị Admin khóa không đăng nhập được, kể cả khi còn phiên cũ.
-- Người dân khôi phục mật khẩu qua số điện thoại đã đăng ký; cách gửi mã phụ thuộc §14, câu 8. Cán bộ quên mật khẩu thì Admin đặt lại (FR-3).
+- Cán bộ quên mật khẩu thì Admin đặt lại (FR-3).
 
 #### FR-3: Admin quản lý tài khoản cán bộ `[CXM-4]` `[CXM-2]`
 
-Admin có thể tạo, sửa, khóa, mở khóa và đặt lại mật khẩu cho tài khoản Cán bộ phường, Cán bộ phòng ban và Admin. Realizes UJ-6.
+Admin có thể tạo, sửa, khóa, mở khóa và đặt lại mật khẩu cho tài khoản Cán bộ phường, Cán bộ phòng ban, Lãnh đạo và Admin. Realizes UJ-6.
 
 **Consequences (testable):**
 - Admin tạo được cả tài khoản Admin khác. `[ASSUMPTION: Admin tạo được tài khoản Admin; doc Tóm tắt nghiệp vụ chỉ nói tài khoản cán bộ do Admin tạo]`
@@ -291,6 +324,7 @@ Admin có thể thêm, sửa, ẩn Lĩnh vực và Loại phản ánh. Realizes 
 
 **Consequences (testable):**
 - Mỗi Loại phản ánh thuộc đúng một Lĩnh vực.
+- Dữ liệu mặc định khi cài đặt: 5 Lĩnh vực môi trường sống ở §4 và 16 Loại phản ánh ở §3 của `de-xuat-phan-luong-2026-10-29.md` (quyết định 1 và 14 ngày 29/10). Không cài sẵn Lĩnh vực nào về vỉa hè, đường, đèn chiếu sáng; phản ánh ngoài 5 Lĩnh vực nằm ngoài phạm vi v1 (§9).
 - Loại phản ánh bị ẩn không xuất hiện khi Người dân gửi phản ánh mới; phản ánh cũ thuộc loại đó vẫn hiển thị đúng tên loại.
 - Lĩnh vực thí điểm không ẩn được và không đổi được mã; Admin chỉ đổi được tên hiển thị. Không có thao tác bật tắt AI trên giao diện Admin (quyết định 6).
 
@@ -314,7 +348,7 @@ Admin có thể thêm, sửa, ẩn Đơn vị xử lý, đặt chế độ của
 Người dân có thể gửi một phản ánh gồm một Loại phản ánh, mô tả và một hoặc nhiều ảnh chụp trực tiếp hoặc chọn từ thư viện. Realizes UJ-1, UJ-9.
 
 **Consequences (testable):**
-- Không gửi được khi thiếu Loại phản ánh, thiếu ảnh hoặc thiếu vị trí.
+- Không gửi được khi thiếu Loại phản ánh, thiếu ảnh hoặc thiếu vị trí. Ảnh bắt buộc với mọi Loại phản ánh, kể cả Tiếng ồn, Không khí và mùi hôi (chốt 11/11/2026; §14.1, câu 31). Ảnh chụp ban đêm dễ bị Sàng lọc gắn cờ "không đọc được"; Cán bộ phường quyết định (FR-15).
 - Số ảnh tối đa mỗi phản ánh là 5. `[ASSUMPTION: tối đa 5 ảnh mỗi phản ánh]`
 - Sau khi gửi, phản ánh ở Submitted và xuất hiện trong danh sách phản ánh của Người gửi.
 - Phản ánh được lưu và xác nhận cho Người gửi kể cả khi AI Module không phản hồi (FR-12, NFR-1).
@@ -329,22 +363,36 @@ Người dân có thể xác định vị trí phản ánh bằng GPS của đi�
 - Thứ tự mặc định: GPS; nếu Người dân từ chối quyền vị trí hoặc GPS không có, Mini App yêu cầu ghim trên bản đồ. `[ASSUMPTION: thứ tự GPS, ghim bản đồ]`
 - Người dân luôn thấy ghim trên bản đồ và có thể kéo ghim trước khi gửi.
 - Hệ thống hiển thị địa chỉ đọc được từ tọa độ (qua Map Service); nếu Map Service lỗi, vẫn gửi được với tọa độ.
-- Hệ thống gán Khu vực cho Phản ánh từ tọa độ lúc gửi.
-- Vị trí nằm ngoài ranh giới phường Hòa Xuân thì không gửi được, kèm thông báo giải thích. `[ASSUMPTION: chặn vị trí ngoài ranh giới phường]` Nguồn dữ liệu ranh giới còn mở (§14, câu 7).
+- Hệ thống gán Khu vực cho Phản ánh từ tọa độ lúc gửi, theo ranh giới của ba Khu vực (§4).
+- Vị trí nằm ngoài ranh giới phường Hòa Xuân thì không gửi được, kèm thông báo giải thích. `[ASSUMPTION: chặn vị trí ngoài ranh giới phường]`
+- Ranh giới phường là hợp của ba Khu vực, lưu trong một file GeoJSON thuộc cấu hình. Nhóm dựng file từ dữ liệu mở và kiểm bằng mắt với bản đồ hành chính; thay bằng dữ liệu của phường khi có (chốt 11/11/2026; §14.1, câu 7).
 
 #### FR-8: Đồng ý xử lý dữ liệu cá nhân khi gửi
 
 Người dân phải đồng ý cho UBND phường xử lý ảnh, vị trí và thông tin liên hệ trước khi gửi phản ánh đầu tiên. Realizes UJ-1. Xem §8.1.
 
 **Consequences (testable):**
-- Nội dung đồng ý nêu mục đích xử lý, ai được xem, thời hạn ẩn rồi xóa dữ liệu chi tiết của phản ánh bị từ chối và ảnh bị loại (90 ngày, FR-41), và thời hạn lưu phản ánh khác. `[ASSUMPTION: giữ phản ánh không bị từ chối 24 tháng, làm giá trị tạm để viết được nội dung đồng ý]` Giá trị thật chờ §14, câu 10 và 11.
+- Nội dung đồng ý nêu mục đích xử lý, ai được xem (Cán bộ phường, Lãnh đạo UBND phường, Cán bộ phòng ban được giao việc), thời hạn ẩn rồi xóa dữ liệu chi tiết của phản ánh bị từ chối và ảnh bị loại (90 ngày, FR-41), và thời hạn lưu phản ánh khác. `[ASSUMPTION: giữ phản ánh không bị từ chối 24 tháng, làm giá trị tạm để viết được nội dung đồng ý]` Giá trị thật chờ §14, câu 10 và 11.
 - Nội dung đồng ý nêu rằng WRMS không gửi dữ liệu phản ánh ra ngoài UBND phường. Khi phường tự chuyển việc lên cấp trên hoặc báo Công an phường, cán bộ có thể chia sẻ ảnh, mô tả, vị trí theo quy trình của phường, không kèm họ tên và số điện thoại của Người gửi. `[ASSUMPTION: không chia sẻ thông tin liên hệ của Người gửi khi phường chuyển việc ra ngoài]`
 - Hệ thống lưu thời điểm và phiên bản nội dung mà Người dân đã đồng ý.
 - Khi nội dung đồng ý đổi phiên bản, Người dân phải đồng ý lại trước lần gửi tiếp theo. `[ASSUMPTION: đổi phiên bản thì phải đồng ý lại]`
 
 ### 5.3 Phân tích tự động (nhóm nghiệp vụ 3)
 
-**Mô tả:** Khi có Phản ánh mới, AI Module sàng lọc từng ảnh, tạo Đề xuất gom cho mọi Lĩnh vực, và đề xuất Mức gợi ý cho Lĩnh vực thí điểm. Mọi kết quả chỉ là gợi ý; Cán bộ phường quyết định. AI Module là dịch vụ riêng (quyết định 14), dùng model pretrained do nhóm tinh chỉnh, chạy trên server của dự án, không gọi AI API bên ngoài. Phần nghiên cứu và cách đánh giá ở §6. Realizes UJ-2.
+**Mô tả:** Khi có Phản ánh mới, AI Module sàng lọc từng ảnh, tạo Đề xuất gom cho mọi Lĩnh vực, kiểm hai Nhãn ảnh "rác" và "thoát nước" trên từng ảnh, và đề xuất Mức gợi ý cho Lĩnh vực thí điểm. Mọi kết quả chỉ là gợi ý; Cán bộ phường quyết định. AI Module là dịch vụ riêng (quyết định 14), dùng model pretrained do nhóm tinh chỉnh, chạy trên server của dự án, không gọi AI API bên ngoài. Phần nghiên cứu và cách đánh giá ở §6. Realizes UJ-2.
+
+**Phạm vi AI theo Lĩnh vực (quyết định 4 ngày 29/10).** AI Module chỉ nhận ra hiện trường của hai Lĩnh vực có AI ảnh. Ba Lĩnh vực còn lại khó thể hiện qua ảnh, nên hệ thống dùng Loại phản ánh, từ khóa trong mô tả và giờ gửi; ảnh của các Phản ánh này chỉ qua Sàng lọc và được kiểm hai Nhãn ảnh để phát hiện chọn sai loại.
+
+| Thành phần | Rác và vệ sinh môi trường | Thoát nước và vệ sinh khu dân cư | Ô nhiễm nguồn nước; Không khí và mùi hôi; Tiếng ồn |
+| --- | --- | --- | --- |
+| Sàng lọc ảnh (FR-9) | Có | Có | Có |
+| Gom nhóm (FR-10) | Vị trí, Loại phản ánh, ảnh | Vị trí, Loại phản ánh, ảnh | Vị trí, Loại phản ánh; không so ảnh |
+| Nhãn ảnh (FR-60) | Nhãn "rác" | Nhãn "thoát nước" | Không có nhãn riêng; ảnh vẫn được kiểm hai nhãn |
+| Mức gợi ý (FR-11) | Có | Không | Không |
+| Nhãn nguy hại, y tế (FR-50) | Có | Không | Không |
+| Gợi ý phân luồng (FR-57, FR-58) | Bảng quy tắc, không dùng ảnh | Bảng quy tắc, không dùng ảnh | Bảng quy tắc, không dùng ảnh |
+
+`[ASSUMPTION: quyết định 4 chỉ ghi "AI ảnh cho rác và thoát nước". PRD hiểu như bảng trên: Sàng lọc vẫn chạy cho mọi ảnh vì chỉ kiểm ảnh có hợp lệ không; so ảnh khi Gom nhóm chỉ áp cho hai Lĩnh vực có AI ảnh; chỉ có hai Nhãn ảnh; Mức gợi ý và nhãn nguy hại, y tế giữ ở Lĩnh vực thí điểm vì tiêu chí ưu tiên dựa trên loại rác. Nhóm chốt cách hiểu này ngày 11/11/2026 (§14.1, câu 30); chờ GVHD xác nhận]`
 
 #### FR-9: Sàng lọc ảnh không hợp lệ
 
@@ -367,6 +415,7 @@ AI Module có thể tạo Đề xuất gom nối một Phản ánh mới với m
 - Trong khi Đề xuất gom chờ duyệt, Phản ánh mới vẫn ở nhóm một phần tử của nó, ở Submitted, và hiện trong Hàng chờ với nhãn "đề xuất gom". `[ASSUMPTION: Đề xuất gom là liên kết chờ duyệt, Phản ánh chưa vào Nhóm cho đến khi được xác nhận]`
 - Khi Cán bộ phường xác nhận, Phản ánh vào Nhóm, nhận trạng thái của Nhóm (§4.1), và Người gửi được báo trạng thái đó. Khi Cán bộ phường bác, Phản ánh ở lại nhóm một phần tử.
 - Ngưỡng khoảng cách, khoảng thời gian và độ giống ảnh là tham số chọn qua đánh giá ở §6, không cố định trong PRD.
+- Với ba Lĩnh vực không có AI ảnh (Ô nhiễm nguồn nước, Không khí và mùi hôi, Tiếng ồn), Đề xuất gom chỉ dựa trên vị trí, Loại phản ánh và khoảng thời gian; không so ảnh (quyết định 4 ngày 29/10). `[ASSUMPTION: Gom nhóm ở ba Lĩnh vực không có AI ảnh không so ảnh]`
 - Đề xuất gom của AI và quyết định của Cán bộ phường lưu riêng, đủ để đo SM-2.
 
 #### FR-11: Gợi ý mức ưu tiên cho Lĩnh vực thí điểm `[CXM-1]`
@@ -402,6 +451,20 @@ AI Module có thể gắn nhãn "nguy hại" hoặc "y tế" cho ảnh của ph�
 - Phản ánh ngoài Lĩnh vực thí điểm không được AI gắn nhãn này; với các Lĩnh vực đó, Cờ chỉ đến từ Cán bộ phường hoặc Người nhận (FR-51).
 - Khi một Nhóm có Cờ Chờ xác nhận được gộp vào Nhóm khác (FR-10, FR-14), Nhóm đích nhận Cờ Chờ xác nhận nếu Nhóm đích chưa có Cờ, hoặc Cờ của Nhóm đích ở Đã gỡ hay Đã xử lý; Nhiệm vụ đang mở của Nhóm đích sang On Hold. Cờ Đã gỡ hoặc Đã xử lý của nhóm nguồn không chuyển sang Nhóm đích.
 
+#### FR-60: Nhãn ảnh cho hai Lĩnh vực có AI ảnh
+
+AI Module có thể gắn Nhãn ảnh "rác" hoặc "thoát nước" cho ảnh của Phản ánh khi nhận ra hiện trường thuộc Lĩnh vực Rác và vệ sinh môi trường hoặc Thoát nước và vệ sinh khu dân cư. Realizes UJ-2. Quyết định 4 ngày 29/10.
+
+**Consequences (testable):**
+- Chỉ có hai Nhãn ảnh. Ảnh không khớp nhãn nào thì không có Nhãn ảnh; AI Module không có nhãn riêng cho ba Lĩnh vực còn lại. `[ASSUMPTION: Nhãn ảnh ở mức Lĩnh vực; có chi tiết tới Loại phản ánh hay không chốt cùng tập dữ liệu ở §6]`
+- AI Module kiểm hai Nhãn ảnh trên ảnh của mọi Phản ánh, kể cả Phản ánh Người dân xếp vào Lĩnh vực khác, để phát hiện trường hợp chọn sai loại (FR-58). Nhận diện loại rác (FR-11, FR-50) vẫn chỉ chạy cho Phản ánh thuộc Lĩnh vực thí điểm. `[ASSUMPTION: Nhãn ảnh chạy cho ảnh của mọi Phản ánh]`
+- Nhãn ảnh chỉ dùng để gợi ý Cán bộ phường sửa Loại phản ánh (FR-58). Gợi ý hiện khi Nhãn ảnh thuộc Lĩnh vực khác với Lĩnh vực Người dân chọn và độ tin cậy vượt ngưỡng đặt trong cấu hình.
+- Nhãn ảnh không tự đổi Loại phản ánh, không là điều kiện của bảng quy tắc (FR-57), không tự chọn Đơn vị xử lý, không tạo Mức gợi ý. Khi Cán bộ phường sửa loại, Gợi ý phân luồng được tính lại (FR-58).
+- Mỗi Nhãn ảnh kèm độ tin cậy. Nhãn của AI và Loại phản ánh cuối cùng lưu riêng.
+- AI Module lỗi thì không có Nhãn ảnh; Gợi ý phân luồng vẫn chạy (FR-12, FR-58).
+
+**Notes:** Nhãn ảnh đứng thứ tám trong thứ tự cắt giảm (§10.3). Dữ liệu huấn luyện và đánh giá cho nhãn "thoát nước" chưa có. Nhãn "thoát nước" có thể bật trên ảnh kênh mương ô nhiễm, nhãn "rác" trên ảnh đốt rác, và sinh gợi ý sửa loại sai; cần đo tỷ lệ này trước khi bật (§6; §14, câu 30).
+
 ### 5.4 Duyệt và tiếp nhận (nhóm nghiệp vụ 4)
 
 **Mô tả:** Cán bộ phường làm việc với Hàng chờ: xem Phản ánh đại diện, xác nhận hoặc bác Đề xuất gom, tách hoặc gộp nhóm, quyết định Ảnh bị gắn cờ, tiếp nhận hoặc từ chối. Realizes UJ-2.
@@ -413,7 +476,7 @@ Cán bộ phường có thể xem Hàng chờ, mỗi Nhóm hiển thị Phản �
 **Consequences (testable):**
 - Hàng chờ sắp mặc định theo Mức cuối, nếu chưa có thì theo Mức gợi ý, rồi theo thời gian gửi cũ nhất. Nhóm chưa có mức nào xếp như mức Trung bình. `[ASSUMPTION: thứ tự sắp Hàng chờ]`
 - Nhóm trong Hàng chờ có Cờ nguy hại Chờ xác nhận luôn đứng đầu với nhãn đỏ, bất kể thứ tự sắp và bộ lọc đang chọn. Nhóm đã Received có Cờ Chờ xác nhận được báo qua Cảnh báo đỏ (FR-51).
-- Lọc được theo Lĩnh vực, Loại phản ánh, Mức ưu tiên, Đơn vị chủ trì gợi ý. Ngoài Hàng chờ, Cán bộ phường có danh sách Nhóm nguy hại (FR-51).
+- Lọc được theo Lĩnh vực, Loại phản ánh, Mức ưu tiên, Đơn vị chủ trì gợi ý. Ngoài Hàng chờ, Cán bộ phường có danh sách Nhóm nguy hại: mọi Nhóm có Cờ nguy hại ở Chờ xác nhận hoặc Đã xác nhận (FR-51), dù Nhóm ở trạng thái nào; Cờ Chờ xác nhận đứng trước, rồi theo thời điểm gắn Cờ cũ nhất. `[ASSUMPTION: nội dung và thứ tự danh sách Nhóm nguy hại]`
 - Phản ánh đại diện mặc định là Phản ánh gửi sớm nhất trong số các Phản ánh không có Ảnh bị gắn cờ; nếu mọi Phản ánh đều có, thì là Phản ánh gửi sớm nhất. Cán bộ phường đổi được Phản ánh đại diện. `[ASSUMPTION: quy tắc chọn Phản ánh đại diện]`
 - Từ một Nhóm, Cán bộ phường mở được mọi Phản ánh trong Nhóm và các Nhóm khác đang mở trong bán kính đặt trong cấu hình. `[ASSUMPTION: bán kính mặc định 100 m]`
 
@@ -503,8 +566,8 @@ Cán bộ phường có thể gửi Yêu cầu bổ sung cho Người gửi củ
 Cán bộ phường có thể xem trạng thái, Hạn chót và lịch sử của mọi Nhiệm vụ thuộc các Nhóm mình phụ trách, và đổi Hạn chót của Nhiệm vụ đang mở. Realizes UJ-7. Quyết định 8 và 13, chờ phường xác nhận.
 
 **Consequences (testable):**
-- Danh sách Nhiệm vụ lọc được theo trạng thái nhiệm vụ, Đơn vị xử lý, Nhiệm vụ quá hạn, Nhiệm vụ sắp quá hạn.
-- Chi tiết Nhóm hiển thị mọi Nhiệm vụ song song của Nhóm, mỗi Nhiệm vụ một dòng: Đơn vị, vai trò chủ trì hoặc phối hợp, Người nhận, trạng thái, Hạn chót.
+- Danh sách Nhiệm vụ lọc được theo trạng thái nhiệm vụ, Đơn vị xử lý, Người nhận, Nhiệm vụ quá hạn, Nhiệm vụ sắp quá hạn, Nhiệm vụ chưa đọc, Nhiệm vụ chưa xử lý (FR-62).
+- Chi tiết Nhóm hiển thị mọi Nhiệm vụ song song của Nhóm, mỗi Nhiệm vụ một dòng: Đơn vị, vai trò chủ trì hoặc phối hợp, Người nhận, trạng thái, Hạn chót, Mốc đã đọc và Mốc đã xử lý kèm thời điểm. Chi tiết Nhóm hiển thị thêm Mốc đã trả lời công dân (FR-62).
 - Đổi Hạn chót ghi lịch sử và báo cho Người nhận. `[ASSUMPTION: Cán bộ phường đổi được Hạn chót; brief và addendum không nói]`
 
 ### 5.6 Phân công nhiệm vụ (nhóm nghiệp vụ 6)
@@ -564,6 +627,7 @@ Cán bộ phòng ban có thể xem danh sách và chi tiết các Nhiệm vụ m
 
 **Consequences (testable):**
 - Danh sách lọc được theo trạng thái nhiệm vụ và Nhiệm vụ quá hạn.
+- Lần đầu Người nhận mở chi tiết một Nhiệm vụ, hệ thống ghi Mốc đã đọc (FR-62). Thành viên Nhóm xử lý không phải Trưởng nhóm mở chi tiết thì không ghi mốc.
 - Chi tiết Nhiệm vụ gồm: ảnh trước (trừ ảnh bị loại), vị trí trên bản đồ, mô tả, Loại phản ánh, Mức cuối, Hạn chót, vai trò chủ trì hoặc phối hợp, các Đơn vị khác đang xử lý cùng Nhóm, kết quả Xác minh hiện trường (nếu có), lý do các lần bị trả lại, thành viên Nhóm xử lý.
 - Thành viên không phải Trưởng nhóm thấy chi tiết nhưng không có nút thao tác, trừ nút "Báo chất thải nguy hại".
 - Người nhận và mọi thành viên Nhóm xử lý có nút "Báo chất thải nguy hại" trên Nhiệm vụ ở Assigned, Accepted hoặc Returned (FR-51).
@@ -621,7 +685,7 @@ Cán bộ phường có thể xem ảnh trước (từ các Phản ánh trong Nh
 
 ### 5.9 Theo dõi và thông báo (nhóm nghiệp vụ 9)
 
-**Mô tả:** Người dân tự tra cứu tiến độ phản ánh của mình. Hệ thống thông báo cho từng vai trò theo sự kiện, và lưu mọi thông báo trong app. Mọi thay đổi trạng thái được ghi lịch sử. Realizes UJ-1, UJ-3, UJ-5.
+**Mô tả:** Người dân tự tra cứu tiến độ phản ánh của mình. Hệ thống thông báo cho từng vai trò theo sự kiện, và lưu mọi thông báo trong app. Mọi thay đổi trạng thái được ghi lịch sử. Lãnh đạo xem toàn bộ ở chế độ chỉ xem (FR-61). Hệ thống ghi Mốc đã đọc và Mốc đã xử lý cho từng Nhiệm vụ, Mốc đã trả lời công dân cho từng Nhóm, để Cán bộ phường và Lãnh đạo theo dõi Người nhận (FR-62). Realizes UJ-1, UJ-3, UJ-5, UJ-10.
 
 #### FR-31: Người dân tra cứu tiến độ `[CXM-3]`
 
@@ -650,6 +714,7 @@ Hệ thống có thể gửi thông báo cho Người nhận và thành viên Nh
 **Consequences (testable):**
 - Có thông báo cho bốn sự kiện của quyết định 11: có Nhiệm vụ mới; có kết quả xét lý do từ chối; bị trả lại (kèm lý do); sắp quá hạn (FR-39).
 - Có thêm thông báo khi Hạn chót đổi (FR-22) và khi Nhiệm vụ bị thu hồi (FR-43). `[ASSUMPTION: thêm hai sự kiện ngoài quyết định 11]`
+- Có thông báo nhắc khi Nhiệm vụ chưa được đọc quá Hạn đọc (FR-63); chỉ gửi cho Người nhận.
 - Có thông báo ưu tiên cao khi Nhiệm vụ chuyển On Hold (nội dung: dừng xử lý, không tiếp xúc chất thải, rời hiện trường) và khi Nhiệm vụ trở lại trạng thái trước sau khi Cờ bị gỡ (FR-53).
 - Thông báo mở thẳng tới Nhiệm vụ liên quan trong app.
 
@@ -682,19 +747,44 @@ Người gửi có thể đánh giá kết quả xử lý phản ánh của mìn
 
 #### FR-35: Lịch sử phản ánh và nhiệm vụ
 
-Hệ thống có thể ghi mọi thay đổi trạng thái phản ánh, trạng thái nhiệm vụ, Mức cuối, Hạn chót, quyền phụ trách, Đề xuất gom, tách hoặc gộp nhóm, Gợi ý phân luồng và quyết định của Cán bộ phường, đóng Nhóm ngoài thẩm quyền, trạng thái Cờ nguy hại kèm nguồn, Kết thúc xử lý nguy hại, kèm người thao tác và thời điểm. Cán bộ phường xem được lịch sử đầy đủ của Nhóm phản ánh.
+Hệ thống có thể ghi mọi thay đổi trạng thái phản ánh, trạng thái nhiệm vụ, Mức cuối, Hạn chót, quyền phụ trách, Đề xuất gom, tách hoặc gộp nhóm, Gợi ý phân luồng và quyết định của Cán bộ phường, đóng Nhóm ngoài thẩm quyền, trạng thái Cờ nguy hại kèm nguồn, Kết thúc xử lý nguy hại, các mốc theo dõi ở FR-62, kèm người thao tác và thời điểm. Cán bộ phường và Lãnh đạo xem được lịch sử đầy đủ của Nhóm phản ánh.
 
 **Consequences (testable):**
 - Lịch sử không sửa hay xóa được qua giao diện, kể cả bởi Admin.
 - Đủ dữ liệu để tính thời gian từ gửi đến Completed và các số liệu ở FR-38.
 
+#### FR-61: Lãnh đạo xem toàn bộ, chỉ xem `[CXM-4]`
+
+Lãnh đạo có thể xem mọi Nhóm phản ánh ở mọi trạng thái, mọi Nhiệm vụ, lịch sử (FR-35), các mốc theo dõi Người nhận (FR-62), bản đồ điểm nóng, dashboard và thống kê (FR-36, FR-37). Realizes UJ-10. Quyết định 6 ngày 29/10.
+
+**Consequences (testable):**
+- Lãnh đạo thấy cùng nội dung như Cán bộ phường ở các màn hình xem: Hàng chờ, chi tiết Nhóm và Phản ánh, danh sách Nhiệm vụ, danh sách Nhóm nguy hại (FR-13). Danh sách Nhiệm vụ của Lãnh đạo gồm mọi Nhiệm vụ của phường, không giới hạn theo Cán bộ phụ trách như ở FR-22. Không giới hạn theo Lĩnh vực hay Đơn vị xử lý. `[ASSUMPTION: mọi Lãnh đạo xem mọi Lĩnh vực, không chia theo mảng Phó Chủ tịch phụ trách]`
+- Lãnh đạo không có thao tác nào làm đổi dữ liệu nghiệp vụ, danh mục hay cấu hình: không tiếp nhận, từ chối, gom, tách, đặt Mức cuối, giao, thu hồi, Nghiệm thu, đóng Nhóm, xác nhận hay gỡ Cờ nguy hại. Quy tắc này kiểm ở server (NFR-4), không chỉ ẩn nút. Lãnh đạo chỉ đổi được mật khẩu và hồ sơ của chính mình (FR-2).
+- Lãnh đạo không mở lại được dữ liệu đang ẩn của phản ánh Rejected và ảnh bị loại (FR-41).
+- Lãnh đạo không nhận thông báo và không thấy dải Cảnh báo đỏ trong v1; xem Nhóm nguy hại qua danh sách (FR-13). `[ASSUMPTION: Lãnh đạo không nhận thông báo trong v1]`
+- Tài khoản Lãnh đạo do Admin tạo (FR-3) và đăng nhập trên web (FR-2).
+- Nội dung đồng ý ở FR-8 nêu Lãnh đạo UBND phường trong danh sách người được xem phản ánh.
+
+#### FR-62: Theo dõi Người nhận: đã đọc, đã xử lý, đã trả lời công dân `[CXM-2]`
+
+Hệ thống có thể ghi Mốc đã đọc và Mốc đã xử lý cho mỗi Nhiệm vụ của Đơn vị xử lý ở chế độ trong hệ thống, ghi Mốc đã trả lời công dân cho mỗi Nhóm phản ánh, và Cán bộ phường, Lãnh đạo có thể xem các mốc đó theo từng Người nhận. Realizes UJ-10. Quyết định 7 ngày 29/10.
+
+**Consequences (testable):**
+- Mốc đã đọc: ghi lần đầu Người nhận mở chi tiết Nhiệm vụ trong app mobile (FR-42). Nếu Người nhận chấp nhận, từ chối hoặc báo chất thải nguy hại khi Nhiệm vụ chưa có mốc, mốc được ghi tại thời điểm đó. Thông báo đẩy tới máy, hoặc đánh dấu đã đọc ở danh sách thông báo (FR-44), không tính là đã đọc. Với Nhóm xử lý, chỉ tính Trưởng nhóm. `[ASSUMPTION: "người phụ trách" trong yêu cầu của phường là Người nhận của Nhiệm vụ; với Nhóm xử lý chỉ tính Trưởng nhóm]`
+- Mốc đã xử lý: thời điểm nộp Minh chứng gần nhất (FR-29), chỉ hiển thị khi Nhiệm vụ đang ở Submitted hoặc Approved. Nhiệm vụ ở trạng thái khác, kể cả Returned, On Hold và Cancelled, hiển thị "chưa xử lý"; các lần nộp cũ vẫn có trong lịch sử. `[ASSUMPTION: "đã xử lý" là đã nộp Minh chứng, chưa cần Nghiệm thu]`
+- Mốc đã trả lời công dân: ghi trên Nhóm khi Nhóm sang Completed hoặc Closed và thông báo kết quả đã gửi cho mọi Người gửi (FR-30, FR-55, FR-56, FR-32). Mốc hiển thị ở chi tiết Nhóm, và trên dòng Nhiệm vụ của Đơn vị chủ trì nếu Nhóm có Nhiệm vụ đó. WRMS chưa có nội dung trả lời bằng chữ do cán bộ soạn, và không có hạn trả lời công dân riêng: không ai được nhắc khi Nhiệm vụ ở Submitted chờ Nghiệm thu lâu. `[ASSUMPTION: "đã trả lời công dân" là thông báo kết quả Completed hoặc Closed đã gửi, không có hạn trả lời riêng; ai soạn câu trả lời, có cần nội dung chữ và hạn riêng không chờ phường, §14 câu 32, 33]`
+- Chi tiết Nhóm và danh sách Nhiệm vụ (FR-22) hiển thị các mốc kèm thời điểm. Danh sách lọc được theo "chưa đọc", "chưa xử lý", Đơn vị xử lý và Người nhận.
+- Cán bộ phường xem trong phạm vi của FR-22; Lãnh đạo xem mọi Nhiệm vụ (FR-61). Cán bộ phòng ban không xem được mốc của người khác.
+- Nhiệm vụ phối hợp ngoài hệ thống (FR-59) không có Người nhận nên không có Mốc đã đọc và Mốc đã xử lý; thời điểm "đã báo" và "đã ghi kết quả" hiển thị ở cùng vị trí.
+- Các mốc ghi vào lịch sử (FR-35) và không sửa được qua giao diện.
+
 ### 5.10 Bản đồ điểm nóng, dashboard và thống kê (nhóm nghiệp vụ 10)
 
-**Mô tả:** Chỉ Cán bộ phường dùng; Admin không truy cập (quyết định 3). Bản đồ điểm nóng là thành phần đầu tiên bị cắt nếu trễ tiến độ (§10.3). Giá trị của nhóm nghiệp vụ này phụ thuộc lượng phản ánh thực tế.
+**Mô tả:** Cán bộ phường dùng; Lãnh đạo xem (FR-61); Admin không truy cập (quyết định 3). Bản đồ điểm nóng là thành phần đầu tiên bị cắt nếu trễ tiến độ (§10.3). Giá trị của nhóm nghiệp vụ này phụ thuộc lượng phản ánh thực tế.
 
 #### FR-36: Bản đồ điểm nóng `[CXM-1]`
 
-Cán bộ phường có thể xem bản đồ mật độ phản ánh trong phường, lọc theo Lĩnh vực, Loại phản ánh, trạng thái phản ánh và khoảng thời gian.
+Cán bộ phường và Lãnh đạo có thể xem bản đồ mật độ phản ánh trong phường, lọc theo Lĩnh vực, Loại phản ánh, trạng thái phản ánh và khoảng thời gian.
 
 **Consequences (testable):**
 - Phản ánh Rejected đã bị xóa dữ liệu chi tiết hiển thị theo Khu vực, không theo tọa độ chính xác.
@@ -702,7 +792,7 @@ Cán bộ phường có thể xem bản đồ mật độ phản ánh trong phư
 
 #### FR-37: Dashboard và thống kê `[CXM-1]`
 
-Cán bộ phường có thể xem số liệu theo Loại phản ánh, trạng thái phản ánh, Mức ưu tiên, Khu vực, thời gian xử lý, Nhiệm vụ quá hạn và phản ánh bị từ chối, trong một khoảng thời gian chọn được.
+Cán bộ phường và Lãnh đạo có thể xem số liệu theo Loại phản ánh, trạng thái phản ánh, Mức ưu tiên, Khu vực, thời gian xử lý, Nhiệm vụ quá hạn và phản ánh bị từ chối, trong một khoảng thời gian chọn được.
 
 **Consequences (testable):**
 - Thời gian xử lý tính từ lúc Nhóm sang Received đến lúc sang Completed. `[ASSUMPTION: định nghĩa thời gian xử lý]`
@@ -711,6 +801,7 @@ Cán bộ phường có thể xem số liệu theo Loại phản ánh, trạng t
 - Có điểm đánh giá trung bình của Người gửi (FR-45) theo Loại phản ánh và Khu vực.
 - Có số Nhóm Closed theo Loại phản ánh. Nhóm Closed không tính vào thời gian xử lý.
 - Có số Nhiệm vụ, thời gian xử lý và tỷ lệ đúng hạn theo Đơn vị xử lý.
+- Có trung vị thời gian từ lúc giao đến Mốc đã đọc và đến Mốc đã xử lý, và số Nhiệm vụ đã bị nhắc quá hạn đọc, theo Đơn vị xử lý (FR-62, FR-63).
 - Có số Cờ nguy hại theo nguồn (AI Module, Cán bộ phòng ban gồm Người nhận và thành viên Nhóm xử lý, Cán bộ phường, gộp nhóm) và kết quả (xác nhận, gỡ), thời gian từ Cờ đến xác nhận và đến Kết thúc xử lý nguy hại.
 
 #### FR-38: Số liệu đo tiêu chí thành công
@@ -728,7 +819,7 @@ Hệ thống có thể ghi và xuất số liệu cần cho SM-1 đến SM-4, v�
 
 ### 5.11 Tác vụ tự động theo thời gian (nhóm nghiệp vụ 11)
 
-**Mô tả:** System Timer chạy định kỳ để nhắc hạn, báo quá hạn và xóa dữ liệu hết hạn. Realizes UJ-3, UJ-7.
+**Mô tả:** System Timer chạy định kỳ để nhắc Nhiệm vụ chưa đọc, nhắc hạn, báo quá hạn và xóa dữ liệu hết hạn. Realizes UJ-3, UJ-7, UJ-10.
 
 #### FR-39: Nhắc sắp quá hạn `[CXM-2]`
 
@@ -748,6 +839,17 @@ System Timer có thể đánh dấu Nhiệm vụ quá hạn và báo cho Cán b�
 - Thông báo quá hạn gửi một lần cho mỗi Hạn chót.
 - Nhiệm vụ ở Submitted đang chờ Nghiệm thu không bị đánh dấu quá hạn. Nếu bị Returned sau Hạn chót, Nhiệm vụ quá hạn ngay; Cán bộ phường nên đổi Hạn chót khi trả lại.
 - Nhiệm vụ ở On Hold không bị đánh dấu quá hạn. Khi trở lại sau khi Cờ bị gỡ, Nhiệm vụ không thể có Hạn chót ở quá khứ (FR-52).
+
+#### FR-63: Nhắc Nhiệm vụ chưa đọc `[CXM-2]`
+
+System Timer có thể nhắc Người nhận khi một Nhiệm vụ ở Assigned chưa có Mốc đã đọc sau Hạn đọc kể từ lúc giao. Realizes UJ-10. Quyết định 7 ngày 29/10.
+
+**Consequences (testable):**
+- Hạn đọc mặc định 4 giờ, tính theo đồng hồ, không theo lịch ngày làm việc; đặt trong cấu hình. `[ASSUMPTION: Hạn đọc 4 giờ theo đồng hồ; chờ phường trả lời "quá thời gian chưa nhận tin là bao lâu", §14 câu 33]`
+- Mỗi Nhiệm vụ chỉ nhận một lần nhắc chưa đọc. Nhắc gửi qua thông báo đẩy và có trong danh sách thông báo (FR-33, FR-44).
+- Sau lần nhắc, Nhiệm vụ mang nhãn "quá hạn đọc" trong danh sách của Cán bộ phường và Lãnh đạo (FR-22, FR-62). Nhãn mất khi Nhiệm vụ có Mốc đã đọc hoặc rời Assigned. Cán bộ phụ trách không nhận thông báo riêng cho việc này. `[ASSUMPTION: quá hạn đọc chỉ hiện nhãn, không báo riêng Cán bộ phụ trách]`
+- Chỉ Nhiệm vụ ở Assigned của Đơn vị ở chế độ trong hệ thống được nhắc. Nhiệm vụ phối hợp ngoài hệ thống (FR-59) không được nhắc. Nhiệm vụ trở lại Assigned từ On Hold (FR-52) thì Hạn đọc tính lại từ lúc trở lại; nếu Nhiệm vụ đã được nhắc trước khi tạm dừng thì không nhắc lần hai.
+- Nhắc sắp quá hạn (FR-39) và báo quá hạn (FR-40) giữ nguyên. FR-63 chỉ thêm một lần nhắc sớm hơn cho Nhiệm vụ chưa ai mở.
 
 #### FR-41: Ẩn và xóa dữ liệu hết hạn
 
@@ -775,7 +877,8 @@ Admin có thể quản lý bảng quy tắc phân luồng: Đơn vị chủ trì
 
 **Consequences (testable):**
 - Mỗi Lĩnh vực có đúng một Đơn vị chủ trì mặc định. Mặc định khi cài đặt: Phòng Kinh tế, Hạ tầng và Đô thị cho cả 5 Lĩnh vực môi trường.
-- Mỗi quy tắc phối hợp gồm điều kiện và một Đơn vị phối hợp. Điều kiện ghép bằng "và" từ: Loại phản ánh; từ khóa trong mô tả (so sau khi bỏ dấu, viết thường); khung giờ gửi; nhãn ảnh của AI Module; Cờ nguy hại. Một quy tắc không có điều kiện nghĩa là "luôn luôn" cho Lĩnh vực đó.
+- Mỗi quy tắc phối hợp gồm điều kiện và một Đơn vị phối hợp. Điều kiện ghép bằng "và" từ: Loại phản ánh; từ khóa trong mô tả (so sau khi bỏ dấu, viết thường); khung giờ gửi; Cờ nguy hại. Một quy tắc không có điều kiện nghĩa là "luôn luôn" cho Lĩnh vực đó.
+- Nhãn ảnh không là điều kiện của quy tắc: nó chỉ gợi ý sửa Loại phản ánh, rồi bảng quy tắc chạy lại (FR-58, FR-60; `de-xuat-phan-luong-2026-10-29.md` §3). PRD trước 11/11 liệt kê nhãn ảnh trong các điều kiện; không quy tắc mặc định nào dùng nó.
 - Dữ liệu mặc định là bảng ở §3 của `de-xuat-phan-luong-2026-10-29.md`. Khung giờ đêm mặc định 22:00 đến 06:00. `[ASSUMPTION: bảng quy tắc và khung giờ đêm mặc định, chờ phường xác nhận]`
 - Sửa bảng chỉ áp cho Nhóm tiếp nhận sau lúc sửa; Gợi ý phân luồng đã tạo không đổi. Mỗi lần sửa ghi lịch sử.
 - Không dùng model học máy cho phân luồng. Lý do: khoảng 100 phản ánh mỗi tháng, không có dữ liệu huấn luyện (quyết định 10 ngày 29/10).
@@ -788,7 +891,7 @@ Hệ thống có thể tạo Gợi ý phân luồng cho mỗi Nhóm phản ánh,
 - Gợi ý có một Đơn vị chủ trì và không hoặc nhiều Đơn vị phối hợp, mỗi đơn vị kèm lý do đọc được, ví dụ "từ khóa: karaoke", "gửi lúc 23:10", "Cờ nguy hại".
 - Gợi ý tạo lúc Phản ánh vào Hàng chờ, tính lại khi có kết quả AI Module, khi Nhóm gộp thêm Phản ánh, hoặc khi Cán bộ phường sửa Loại phản ánh. Gợi ý tính trên hợp các Phản ánh của Nhóm.
 - Nhóm không khớp quy tắc phối hợp nào chỉ có Đơn vị chủ trì.
-- Nhãn ảnh của AI Module dùng để gợi ý Cán bộ phường sửa Loại phản ánh khi Người dân chọn sai loại; nhãn ảnh không tự đổi Loại phản ánh. `[ASSUMPTION: nhãn ảnh chỉ gợi ý sửa loại]`
+- Nhãn ảnh của AI Module (FR-60) dùng để gợi ý Cán bộ phường sửa Loại phản ánh khi Người dân chọn sai loại; Nhãn ảnh không tự đổi Loại phản ánh. `[ASSUMPTION: nhãn ảnh chỉ gợi ý sửa loại]`
 - Cán bộ phường bỏ hoặc thêm đơn vị, đổi Đơn vị chủ trì, rồi bấm giao; hệ thống mở bước giao Nhiệm vụ (FR-23, FR-24, FR-59) cho từng đơn vị đã chọn.
 - Gợi ý và danh sách đơn vị cuối cùng lưu riêng, để đo SM-R6 (FR-38).
 - AI Module lỗi thì vẫn có Gợi ý từ Loại phản ánh, từ khóa và giờ gửi (FR-12).
@@ -813,7 +916,7 @@ Cán bộ phường có thể đóng một Nhóm phản ánh ở Submitted, Rece
 **Consequences (testable):**
 - Nhóm sang Closed (§4.1); mọi Người gửi nhận thông báo kèm ghi chú (FR-31, FR-32).
 - Không đóng được khi Nhóm có Nhiệm vụ đang mở; Cán bộ phường thu hồi (FR-43) hoặc xét xong lý do từ chối (FR-28) trước. Không đóng được Nhóm nguy hại.
-- Ghi chú là chữ tự do, ví dụ "đã báo đường dây nóng cấp nước". WRMS không có danh bạ cơ quan, không lưu số văn bản, không theo dõi kết quả ở cấp trên.
+- Ghi chú là chữ tự do, ví dụ "đã báo tổng đài 1022 của thành phố". WRMS không có danh bạ cơ quan, không lưu số văn bản, không theo dõi kết quả ở cấp trên.
 - Closed là trạng thái kết thúc; không mở lại, không gom Phản ánh mới vào.
 
 **C. Chất thải nguy hại**
@@ -870,7 +973,7 @@ Phần này mô tả phần nghiên cứu của đồ án, không phải yêu c�
 
 - RQ-1: Nhận diện được các loại rác thường và rác đặc biệt (nguy hại, y tế, xây dựng, cồng kềnh) trong ảnh hiện trường chụp tại Hòa Xuân với độ chính xác bao nhiêu, khi model chỉ huấn luyện trên dataset công khai? (FR-11, FR-50) Recall của hai lớp nguy hại và y tế được báo riêng (SM-R5), vì bỏ sót các lớp này có hệ quả an toàn.
 - RQ-2: Tiêu chí ưu tiên dựa trên độ đa dạng của rác và việc có rác đặc biệt khớp với nhãn do người gán đến mức nào? (FR-11)
-- RQ-3: Gom theo vị trí, Loại phản ánh và ảnh có tốt hơn gom chỉ theo vị trí không? (FR-10)
+- RQ-3: Gom theo vị trí, Loại phản ánh và ảnh có tốt hơn gom chỉ theo vị trí không? (FR-10) Chỉ đánh giá trên Lĩnh vực có AI ảnh; ba Lĩnh vực còn lại không so ảnh.
 - RQ-4: Sàng lọc phát hiện ảnh không hợp lệ với độ chính xác bao nhiêu? (FR-9)
 
 **Dữ liệu**
@@ -891,22 +994,22 @@ Phần này mô tả phần nghiên cứu của đồ án, không phải yêu c�
 
 **Sản phẩm đầu ra của nghiên cứu**
 
-1. AI Module gồm Sàng lọc, Gom nhóm, nhận diện rác, kèm kết quả đánh giá.
+1. AI Module gồm Sàng lọc, Gom nhóm, nhận diện rác, Nhãn ảnh, kèm kết quả đánh giá.
 2. Bộ ảnh đánh giá tự chụp tại Hòa Xuân, có nhãn hiện trường, hợp lệ, loại rác và Mức ưu tiên. Có công bố bộ ảnh hay không là câu hỏi mở (§14, câu 19) vì ảnh có thể chứa dữ liệu cá nhân.
 3. Tiêu chí ưu tiên và ngưỡng Gom nhóm đã đánh giá.
 4. Báo cáo đánh giá và báo cáo đồ án.
 
-**Còn mở:** cỡ tập đánh giá; nguồn ảnh không hợp lệ cho huấn luyện (§14, câu 9); cách xử lý mặt người và biển số trong ảnh nhóm tự chụp (§8.1).
+**Còn mở:** cỡ tập đánh giá; nguồn ảnh không hợp lệ cho huấn luyện (§14, câu 9); cách xử lý mặt người và biển số trong ảnh nhóm tự chụp (§8.1); dữ liệu huấn luyện, dữ liệu đánh giá và thước đo cho Nhãn ảnh "thoát nước" (FR-60), và việc Nhãn ảnh có thành câu hỏi nghiên cứu riêng hay không (§14, câu 30).
 
 ## 7. Yêu cầu phi chức năng xuyên suốt
 
 - **NFR-1 Phản hồi khi gửi.** Sau khi tải ảnh xong, app xác nhận đã nhận phản ánh trong 5 giây ở 95% lần gửi, không chờ AI Module. `[ASSUMPTION: 5 giây ở 95% lần gửi]`
 - **NFR-2 Thời gian phân tích.** AI Module trả kết quả cho 95% Phản ánh trong 2 phút khi đang hoạt động. Quá 10 phút thì Phản ánh mang nhãn "chưa phân tích" (FR-12). `[ASSUMPTION: 2 phút ở 95% phản ánh, hết hạn sau 10 phút]`
 - **NFR-3 Quy mô.** Hệ thống thiết kế cho khoảng 100 phản ánh mỗi tháng (quyết định 10 ngày 29/10) và chạy ổn với đỉnh 50 phản ánh mỗi ngày, 20 tài khoản cán bộ dùng đồng thời. `[ASSUMPTION: 50 phản ánh mỗi ngày, 20 cán bộ đồng thời]` `[CXM-1]` `[CXM-4]`
-- **NFR-4 Phân quyền.** `[CXM-4]` Mỗi API và màn hình kiểm tra vai trò. Admin không đọc được nội dung phản ánh, ảnh, bản đồ điểm nóng, dashboard, thống kê. Người dân chỉ đọc được phản ánh của mình. Cán bộ phòng ban chỉ đọc được Nhóm phản ánh của Nhiệm vụ mình là Người nhận hoặc thành viên Nhóm xử lý, kèm danh sách Đơn vị khác đang xử lý cùng Nhóm, không đọc nội dung Nhiệm vụ của đơn vị khác. `[ASSUMPTION: Cán bộ phòng ban không xem Hàng chờ chung]`
+- **NFR-4 Phân quyền.** `[CXM-4]` Mỗi API và màn hình kiểm tra vai trò. Admin không đọc được nội dung phản ánh, ảnh, bản đồ điểm nóng, dashboard, thống kê. Người dân chỉ đọc được phản ánh của mình. Cán bộ phòng ban chỉ đọc được Nhóm phản ánh của Nhiệm vụ mình là Người nhận hoặc thành viên Nhóm xử lý, kèm danh sách Đơn vị khác đang xử lý cùng Nhóm, không đọc nội dung Nhiệm vụ của đơn vị khác. `[ASSUMPTION: Cán bộ phòng ban không xem Hàng chờ chung]` Lãnh đạo đọc được mọi thứ Cán bộ phường đọc được, trừ dữ liệu đang ẩn theo FR-41, và không ghi được dữ liệu nghiệp vụ, danh mục hay cấu hình; các API ghi đó từ chối tài khoản Lãnh đạo. Lãnh đạo chỉ đổi được mật khẩu và hồ sơ của chính mình (FR-2, FR-61).
 - **NFR-5 Bảo mật.** Mọi kết nối dùng HTTPS. Mật khẩu lưu dạng băm. Ảnh chỉ tải được qua đường dẫn có kiểm tra quyền, không có đường dẫn công khai. Phiên web hết sau 8 giờ không hoạt động; tài khoản bị khóa đăng nhập 15 phút sau 5 lần nhập sai liên tiếp. `[ASSUMPTION: phiên web 8 giờ, khóa 15 phút sau 5 lần sai]`
 - **NFR-6 Thông báo dự phòng.** Thông báo đẩy không đến được thì vẫn có trong danh sách thông báo trong app (FR-44) hoặc trên web (FR-34).
-- **NFR-7 Ngôn ngữ và nền tảng.** Giao diện tiếng Việt. Ba giao diện: Zalo Mini App (Người dân), app mobile cho cán bộ (Cán bộ phòng ban), web (Cán bộ phường, Lãnh đạo, Admin). Mini App và app mobile theo cỡ chữ hệ thống của điện thoại. Web chạy trên Chrome và Edge bản mới, màn hình rộng từ 1366 px. `[ASSUMPTION: cỡ chữ hệ thống; Chrome và Edge; màn hình từ 1366 px]` App mobile cho cán bộ hỗ trợ Android, iOS hay cả hai còn mở (§14, câu 8; `chot-2026-10-29.md` mục 6, A2).
+- **NFR-7 Ngôn ngữ và nền tảng.** Giao diện tiếng Việt. Ba giao diện: Zalo Mini App (Người dân), app mobile cho cán bộ (Cán bộ phòng ban), web (Cán bộ phường, Lãnh đạo, Admin). Mini App và app mobile theo cỡ chữ hệ thống của điện thoại. Web chạy trên Chrome và Edge bản mới, màn hình rộng từ 1366 px. `[ASSUMPTION: cỡ chữ hệ thống; Chrome và Edge; màn hình từ 1366 px]` App mobile cho cán bộ làm Android trước, cài bằng APK; iOS chỉ làm nếu còn thời gian (chốt 11/11/2026; §14.1, câu 8). Các màn hình Cán bộ phường chụp ảnh tại hiện trường (FR-20, FR-30, FR-52, FR-55) dùng được trên trình duyệt điện thoại, chụp qua `<input type="file" accept="image/*" capture>`; Cán bộ phường không đăng nhập app mobile (chốt 11/11/2026; §14.1, câu 28). Trên web, "chụp trực tiếp" nghĩa là ảnh lấy qua `capture`, thời điểm là lúc tải lên, vị trí lấy từ Geolocation của trình duyệt; mức chống ảnh cũ thấp hơn app mobile. `[ASSUMPTION: nghĩa của "chụp trực tiếp" trên web]`
 - **NFR-8 AI chạy nội bộ.** Không gửi ảnh, vị trí hay mô tả ra AI API bên ngoài. Map Service và Notification Service chỉ nhận tọa độ và nội dung thông báo cần cho chức năng của chúng.
 - **NFR-9 Ghi log.** Lỗi và thời gian xử lý của AI Module được ghi lại, đủ để tính NFR-2 và hỗ trợ đánh giá ở §6.
 - **NFR-10 Mạng yếu.** App nén mỗi ảnh về tối đa 2 MB trước khi tải. Gửi phản ánh hoặc nộp Minh chứng thất bại thì giữ bản nháp trên điện thoại và cho thử lại. `[ASSUMPTION: nén ảnh về tối đa 2 MB]`
@@ -920,15 +1023,15 @@ Phần này mô tả phần nghiên cứu của đồ án, không phải yêu c�
 
 - Đồng ý khi gửi phản ánh (FR-8).
 - Ẩn ảnh, mô tả, tọa độ chính xác của phản ánh bị từ chối và ảnh bị loại trong 90 ngày, rồi xóa (FR-41); không giữ làm dataset. Người dân được báo thời hạn này khi đồng ý (FR-8).
-- Admin không truy cập nội dung phản ánh (NFR-4). `[CXM-4]` Nếu sinh viên trong nhóm giữ vai trò Admin, quy tắc này là thứ duy nhất ngăn nhóm đọc dữ liệu cá nhân của người dân; nhóm không được cấp cho mình vai trò Cán bộ phường trên dữ liệu thật.
-- `[NOTE FOR PM: brief ghi "cân nhắc làm mờ mặt và biển số". PRD chưa đưa thành FR. Nếu làm, đây là thêm một thành phần AI vào khối lượng vốn đã lớn. Cần quyết định trước khi chốt kiến trúc.]`
+- Admin không truy cập nội dung phản ánh (NFR-4). `[CXM-4]` Nếu sinh viên trong nhóm giữ vai trò Admin, quy tắc này là thứ duy nhất ngăn nhóm đọc dữ liệu cá nhân của người dân; nhóm không được cấp cho mình vai trò Cán bộ phường hoặc Lãnh đạo trên dữ liệu thật.
+- WRMS không làm mờ mặt người và biển số trong v1 (chốt 11/11/2026; §14.1, câu 13); đây là hướng mở rộng. Lý do: thêm một thành phần AI vào khối lượng vốn đã lớn. WRMS dựa vào nội dung đồng ý (FR-8) và giới hạn người xem (NFR-4). Chờ GVHD xác nhận.
 - Chưa có quy tắc cho: thời hạn lưu phản ánh không bị từ chối (FR-8 đang dùng giá trị tạm 24 tháng); Người dân rút lại đồng ý hoặc xóa tài khoản thì phản ánh của họ xử lý thế nào; ảnh phản ánh được chấp nhận có được dùng để huấn luyện không. Xem §14, câu 10, 11.
 - Ảnh nhóm tự chụp cho tập đánh giá cũng chịu luật này.
 - WRMS không gửi dữ liệu phản ánh ra ngoài UBND phường. Khi phường tự chuyển việc lên cấp trên, báo Công an phường hoặc đơn vị thu gom chất thải nguy hại, việc chia sẻ dữ liệu thuộc quy trình của phường; nội dung đồng ý ở FR-8 nêu việc này.
 
 ### 8.2 AI
 
-- AI chỉ gợi ý; con người quyết định cuối ở cả ba thành phần (FR-9, FR-10, FR-11).
+- AI chỉ gợi ý; con người quyết định cuối ở mọi thành phần (FR-9, FR-10, FR-11, FR-60).
 - Ngoại lệ có chủ đích: nhãn "nguy hại" hoặc "y tế" của AI (FR-50) tự khóa tạm việc giao Nhiệm vụ và tạm dừng Nhiệm vụ đang mở (FR-53) cho đến khi Cán bộ phường xác nhận hoặc gỡ Cờ. AI không quyết định thay người; khóa chỉ là mặc định an toàn khi chưa có người xem, vì cho cán bộ đi dọn nhầm chất thải nguy hại gây hại khó khắc phục hơn một Nhiệm vụ bị chậm.
 - AI lỗi thì phản ánh vẫn được tiếp nhận (FR-12).
 - Model pretrained do nhóm tinh chỉnh, chạy trên server của dự án, không dùng AI API bên ngoài (NFR-8).
@@ -939,7 +1042,7 @@ WRMS không xử lý khiếu nại, tố cáo (có luật và quy trình riêng)
 
 **Phản ánh ngoài thẩm quyền (FR-56).** WRMS chỉ đóng Nhóm và báo Người gửi. Việc chuyển lên cơ quan có trách nhiệm do phường làm theo quy định hiện hành (ví dụ Điều 20 Thông tư 05/2021/TT-TTCP về chuyển đơn phản ánh, nếu áp dụng), ngoài hệ thống. Vì vậy PRD không cần căn cứ pháp lý cho việc chuyển. Thời hạn xử lý mặc định lấy theo QĐ 132/2026/QĐ-CTUBND của Chủ tịch UBND TP Đà Nẵng, quy chế xử lý phản ánh qua Tổng đài 1022 và Cổng góp ý (10 ngày làm việc, khẩn cấp 1 ngày làm việc, hiệu lực 01/10/2026; nguồn: Báo Đà Nẵng).
 
-**Tên cơ quan sau sắp xếp bộ máy.** Từ năm 2025, Sở Giao thông vận tải và Sở Xây dựng thành phố Đà Nẵng hợp nhất thành Sở Xây dựng; Sở Tài nguyên và Môi trường và Sở Nông nghiệp và Phát triển nông thôn hợp nhất thành Sở Nông nghiệp và Môi trường. Từ 01/07/2025 chính quyền địa phương còn hai cấp, nên một số tuyến đường, cống, đèn trước do quận quản lý có thể đã thuộc phường. Vì vậy PRD không viết cứng Lĩnh vực nào là ngoài thẩm quyền: Cán bộ phường quyết định từng Nhóm (FR-56). Danh sách tuyến, công trình do phường quản lý cần lấy từ phường (§14, câu 23).
+**Tên cơ quan sau sắp xếp bộ máy.** Từ năm 2025, Sở Giao thông vận tải và Sở Xây dựng thành phố Đà Nẵng hợp nhất thành Sở Xây dựng; Sở Tài nguyên và Môi trường và Sở Nông nghiệp và Phát triển nông thôn hợp nhất thành Sở Nông nghiệp và Môi trường. Từ 01/07/2025 chính quyền địa phương còn hai cấp, nên một số tuyến cống, mương thoát nước và công trình vệ sinh môi trường trước do quận quản lý có thể đã thuộc phường. Vì vậy PRD không viết cứng Lĩnh vực nào là ngoài thẩm quyền: Cán bộ phường quyết định từng Nhóm (FR-56). Danh sách tuyến, công trình do phường quản lý cần lấy từ phường (§14, câu 23).
 
 **Phòng ban cấp phường (căn cứ cho FR-5, FR-57).** Theo Nghị định 150/2025/NĐ-CP, sửa bởi Nghị định 370/2025/NĐ-CP (hiệu lực 01/01/2026), phường có Văn phòng HĐND và UBND, Phòng Kinh tế, Hạ tầng và Đô thị, Phòng Văn hóa - Xã hội; UBND thành phố quyết định khung số lượng và tên phòng. Lĩnh vực môi trường, cấp thoát nước đô thị thuộc Phòng Kinh tế, Hạ tầng và Đô thị. Công an phường thuộc ngành dọc Bộ Công an (Nghị định 184/2025/NĐ-CP). Trạm Y tế phường Đà Nẵng thuộc UBND phường từ 01/7/2026 (QĐ 1149/QĐ-UBND). Chi tiết và nguồn ở `research/domain-phong-ban-ubnd-phuong-hoa-xuan-2026-10-29/research.md`.
 
@@ -952,6 +1055,7 @@ WRMS không xử lý khiếu nại, tố cáo (có luật và quy trình riêng)
 
 ## 9. Ngoài mục tiêu
 
+- WRMS không nhận phản ánh ngoài 5 Lĩnh vực môi trường sống. Vỉa hè, đường và đèn chiếu sáng đã bỏ khỏi phạm vi (quyết định 1 ngày 29/10).
 - WRMS không thay Góp ý Đà Nẵng, 1022 hay Zalo, và không nhận phản ánh từ các kênh đó. Cán bộ phường vẫn theo dõi các kênh thành phố song song.
 - WRMS không tích hợp, không gửi dữ liệu tới cơ quan ngoài phường, không cấp tài khoản cho họ, không giao Nhiệm vụ cho họ, không lưu phiếu chuyển và không theo dõi tiến độ xử lý của họ. Việc vượt thẩm quyền phường do phường tự chuyển lên cấp trên; WRMS chỉ đóng Nhóm "Ngoài thẩm quyền" (FR-56). `[CXM-2]`
 - Không có danh bạ cơ quan, Hồ sơ nguy hại nhiều bước, biên bản xác minh hay bàn giao chất thải nguy hại (quyết định 2, 3 ngày 29/10).
@@ -964,29 +1068,29 @@ WRMS không xử lý khiếu nại, tố cáo (có luật và quy trình riêng)
 - Không có bật tắt AI; AI không tự quyết định (quyết định 5, 6).
 - Không gọi AI API bên ngoài.
 - `[NON-GOAL for MVP]` Người dân sửa hoặc rút lại phản ánh đã gửi.
-- `[NON-GOAL for MVP]` Người dân phản hồi khi phản ánh báo Completed mà hiện trường chưa sạch. `[NOTE FOR PM: đây là một phần của chân "khép kín vòng" trong luận điểm, và hội đồng có thể hỏi. Thêm thì cần cách mở lại phản ánh đã Completed, tức là thêm một chuyển trạng thái mới. FR-45 cho Người gửi chấm điểm, nhưng không mở lại phản ánh.]`
+- `[NON-GOAL for MVP]` Người dân phản hồi khi phản ánh báo Completed mà hiện trường chưa sạch. Nhóm chốt ngày 11/11/2026 không làm trong v1 (§14.1, câu 20): thêm thì cần một chuyển trạng thái mới để mở lại phản ánh đã Completed. FR-45 cho Người gửi chấm điểm, nhưng không mở lại phản ánh. Hội đồng có thể hỏi, vì đây là một phần của chân "khép kín vòng" trong luận điểm.
 
 ## 10. Phạm vi MVP
 
 ### 10.1 Trong phạm vi (01/01/2027 – 30/04/2027)
 
-- Phản ánh hiện trường gửi qua app WRMS tại phường Hòa Xuân.
+- Phản ánh hiện trường thuộc 5 Lĩnh vực môi trường sống (§4), gửi qua app WRMS tại phường Hòa Xuân. Quyết định 1, `chot-2026-10-29.md`.
 - Zalo Mini App cho Người dân (bản Development/Testing, chưa phát hành); app mobile riêng cho Cán bộ phòng ban (bản demo, không lên store); web cho Cán bộ phường, Lãnh đạo và Admin. Quyết định 8 và 16, `chot-2026-10-29.md`.
-- Cả 12 nhóm nghiệp vụ ở §5 (FR-1 đến FR-59, trừ FR-46 đến FR-49 và FR-54 đã bỏ).
-- Sàng lọc và Gom nhóm cho mọi Lĩnh vực; Mức gợi ý chỉ cho Lĩnh vực thí điểm.
+- Cả 12 nhóm nghiệp vụ ở §5 (FR-1 đến FR-63, trừ FR-46 đến FR-49 và FR-54 đã bỏ).
+- Sàng lọc và Gom nhóm cho mọi Lĩnh vực; so ảnh khi Gom nhóm chỉ cho hai Lĩnh vực có AI ảnh; Nhãn ảnh có hai giá trị, kiểm trên ảnh của mọi Phản ánh (FR-60); Mức gợi ý chỉ cho Lĩnh vực thí điểm (bảng ở §5.3).
 - Đánh giá nghiên cứu và bốn sản phẩm đầu ra ở §6.
 
 ### 10.2 Ngoài phạm vi MVP
 
 - Mọi mục ở §9.
-- Làm mờ mặt và biển số: chưa quyết định (§8.1).
+- Làm mờ mặt và biển số: không làm trong v1 (§8.1).
 - Mức gợi ý cho Lĩnh vực ngoài Lĩnh vực thí điểm: để sau khi có kết quả thí điểm.
 
 ### 10.3 Thứ tự cắt giảm khi trễ tiến độ
 
 Các FR chia thành bốn tầng:
 
-- **Lõi luận điểm (không cắt):** gửi phản ánh, tài khoản và danh mục (FR-1 đến FR-8); Hàng chờ và quyết định (FR-12, FR-13, FR-14, FR-16, FR-17, FR-19); giao, giao lại, thu hồi (FR-23, FR-25, FR-43); nhận và từ chối nhiệm vụ (FR-26, FR-27, FR-28, FR-42); Nghiệm thu (FR-29, FR-30); thông báo và lịch sử (FR-31 đến FR-35, FR-44); nhắc hạn, báo quá hạn, xóa dữ liệu (FR-39, FR-40, FR-41); số liệu đo SM (FR-38).
+- **Lõi luận điểm (không cắt):** gửi phản ánh, tài khoản và danh mục (FR-1 đến FR-8); Hàng chờ và quyết định (FR-12, FR-13, FR-14, FR-16, FR-17, FR-19); giao, giao lại, thu hồi (FR-23, FR-25, FR-43); nhận và từ chối nhiệm vụ (FR-26, FR-27, FR-28, FR-42); Nghiệm thu (FR-29, FR-30); thông báo và lịch sử (FR-31 đến FR-35, FR-44); nhắc hạn, báo quá hạn, xóa dữ liệu (FR-39, FR-40, FR-41); số liệu đo SM (FR-38); Lãnh đạo xem, theo dõi Người nhận và nhắc chưa đọc (FR-61, FR-62, FR-63). `[ASSUMPTION: FR-61 đến FR-63 không cắt vì là yêu cầu của phường]`
 - **Phân luồng, thẩm quyền và an toàn (không cắt):** Đơn vị xử lý, bảng quy tắc, Gợi ý phân luồng, Nhiệm vụ phối hợp ngoài hệ thống (FR-5, FR-57, FR-58, FR-59); đóng Nhóm ngoài thẩm quyền (FR-56); Cờ nguy hại, Cảnh báo đỏ, khóa giao việc, Kết thúc xử lý nguy hại (FR-51, FR-52, FR-53, FR-55). Lý do: phân luồng là yêu cầu của phường (quyết định 5 ngày 29/10); thiếu phần an toàn, WRMS có thể cho cán bộ đi dọn chất thải nguy hại. `[ASSUMPTION: tầng này không cắt]`
 - **Nghiên cứu (không cắt, theo brief):** Gom nhóm (FR-10) và Mức gợi ý (FR-11). Nhãn nguy hại và y tế (FR-50) thêm sau brief, dùng chung model nhận diện rác của FR-11.
 - **Phần thêm (cắt theo thứ tự):**
@@ -997,7 +1101,7 @@ Các FR chia thành bốn tầng:
   5. Đánh giá sao của Người dân (FR-45).
   6. Ghi nhận Xác minh hiện trường (FR-20) và chuyển quyền phụ trách (FR-18).
   7. Yêu cầu bổ sung (FR-21) và đổi Hạn chót (phần đổi ở FR-22). Việc đặt Hạn chót mới khi gỡ Cờ thuộc FR-52, không bị cắt theo.
-  8. Thông báo trình duyệt và âm báo của Cảnh báo đỏ (một phần FR-51); quy tắc theo nhãn ảnh AI trong FR-57 (giữ quy tắc theo Loại phản ánh, từ khóa, giờ gửi).
+  8. Thông báo trình duyệt và âm báo của Cảnh báo đỏ (một phần FR-51); Nhãn ảnh và gợi ý sửa Loại phản ánh theo Nhãn ảnh (FR-60, một phần FR-58); bảng quy tắc phân luồng không bị ảnh hưởng.
 
 `[NOTE FOR PM: hai bước đầu theo brief giữ phần nghiên cứu và cắt phần có ích trực tiếp cho phường. Nếu buổi làm việc với phường cho thấy lượng phản ánh thấp (CXM-1), nên xem lại thứ tự này. Các bước 3 đến 8 do PRD đề xuất; nhóm chốt. Nhóm nghiệp vụ 12 sau khi rút gọn ngày 29/10 nhẹ hơn bản 23/10; addendum vẫn đề xuất giao cho B.]`
 
@@ -1006,7 +1110,7 @@ Các FR chia thành bốn tầng:
 | Bên | Phê duyệt gì | Khi nào |
 | --- | --- | --- |
 | UBND phường Hòa Xuân | Đồng ý thí điểm; trả lời bốn câu ở §2; xác nhận 16 quyết định nghiệp vụ | Trước 01/01/2027 |
-| GVHD | Sáu thay đổi so với đơn đăng ký (dưới đây); tiêu chí ưu tiên; thước đo nghiên cứu; hướng mặc định ở §2.1 | Trước khi chốt PRD cho kiến trúc |
+| GVHD | Sáu thay đổi so với đơn đăng ký và hai thay đổi ngày 29/10 (dưới đây); tiêu chí ưu tiên; thước đo nghiên cứu; hướng mặc định ở §2.1 | Trước khi chốt PRD cho kiến trúc |
 | Hội đồng bảo vệ | Đánh giá đồ án | Sau 30/04/2027 |
 
 Sáu thay đổi so với đơn đăng ký cần báo GVHD:
@@ -1021,6 +1125,13 @@ Sáu thay đổi so với đơn đăng ký cần báo GVHD:
 Trạng thái nhiệm vụ Cancelled (FR-43), nếu nhóm giữ, là một thay đổi nữa, nhưng so với addendum của brief chứ không so với đơn đăng ký.
 
 Thay đổi so với brief và addendum của brief, không so với đơn đăng ký: nhóm nghiệp vụ 12 (§5.12) với phân luồng tới Đơn vị xử lý và nhiều Nhiệm vụ song song mỗi Nhóm (thay quyết định 10 của brief), trạng thái phản ánh Closed, trạng thái nhiệm vụ On Hold, luồng chất thải nguy hại rút gọn. Nên báo GVHD cùng sáu thay đổi trên.
+
+Hai thay đổi nữa so với đơn đăng ký, chốt ngày 29/10 và đưa vào PRD ngày 11/11/2026; nên báo GVHD cùng lúc:
+
+- Phạm vi thu hẹp về 5 Lĩnh vực môi trường sống (quyết định 1 ngày 29/10, theo mentor). Đơn đăng ký nêu cả lấn chiếm vỉa hè, đường hỏng, đèn đường hỏng, và ghi Sàng lọc, Gom nhóm cho "mọi loại phản ánh".
+- Thêm vai trò Lãnh đạo chỉ xem (FR-61) và ba mốc theo dõi Người nhận (FR-62, FR-63), theo yêu cầu của phường (quyết định 6, 7 ngày 29/10). Đơn đăng ký chỉ có Người dân, Admin, Cán bộ phường và người nhận nhiệm vụ.
+
+Nhãn ảnh cho hai Lĩnh vực (FR-60, quyết định 4 ngày 29/10) là thành phần AI thêm so với bảng khai báo AI trong đơn đăng ký, vốn chỉ có sàng lọc, chấm ưu tiên và gom nhóm.
 
 **Vận hành sau 04/2027.** `[CXM-4]` Chưa có kế hoạch: chưa rõ server đặt ở đâu, ai trả chi phí, ai bảo trì phần mềm và model. Hiện chỉ có một thành viên nhóm nhận lời hỗ trợ khi phường liên hệ. Theo brief, nơi đặt server và người chịu chi phí chốt khi phường duyệt. Kế hoạch vận hành là điều kiện để đạt mục tiêu "phường thật sự dùng" ở §1.
 
@@ -1037,12 +1148,12 @@ Thay đổi so với brief và addendum của brief, không so với đơn đăn
 - **SM-5: Số lần Người dân phải hỏi lại tiến độ.** Đo bằng khảo sát ngắn Người gửi cuối thí điểm và hỏi Cán bộ phường số lần bị hỏi qua kênh khác, ngoài hệ thống. Mục tiêu: chưa đặt. Validates FR-31, FR-32. `[CXM-3]` `[ASSUMPTION: đo SM-5 bằng khảo sát]`
 - **SM-R4: Thời gian xử lý.** Thời gian từ gửi đến Completed và thời gian xử lý (FR-37), so với quy trình hiện tại nếu phường có số liệu. Validates FR-35, FR-38. `[CXM-1]`
 
-`[NOTE FOR PM: brief đo kết quả "không đôn đốc bằng miệng" bằng tỷ lệ nhiệm vụ có hạn chót và tỷ lệ nhiệm vụ quá hạn được cảnh báo trước, và đo "khép kín nghiệm thu" bằng tỷ lệ phản ánh hoàn thành có ảnh trước và sau. Theo thiết kế, cả ba gần như luôn 100%: FR-23 bắt buộc Hạn chót, FR-39 nhắc mọi Nhiệm vụ, FR-29 bắt buộc ảnh sau. Chúng chỉ còn là phép kiểm hệ thống chạy đúng. PRD thay bằng SM-3 và SM-4 đo kết quả. Nhóm cần đồng ý vì đây là đổi so với brief.]`
+Ghi chú: brief đo kết quả "không đôn đốc bằng miệng" bằng tỷ lệ nhiệm vụ có hạn chót và tỷ lệ nhiệm vụ quá hạn được cảnh báo trước, và đo "khép kín nghiệm thu" bằng tỷ lệ phản ánh hoàn thành có ảnh trước và sau. Theo thiết kế, cả ba gần như luôn 100%: FR-23 bắt buộc Hạn chót, FR-39 nhắc mọi Nhiệm vụ, FR-29 bắt buộc ảnh sau. Chúng chỉ còn là phép kiểm hệ thống chạy đúng. PRD thay bằng SM-3 và SM-4 đo kết quả. Nhóm đồng ý ngày 11/11/2026 (§14.1, câu 20); đây là đổi so với brief.
 
 **Nghiên cứu (đo trên tập đánh giá, không cần thí điểm)**
 
 - **SM-R1: Độ khớp Mức gợi ý.** So với nhãn của nhóm (và của người gán nhãn độc lập); so với Mức cuối của Cán bộ phường nếu có thí điểm. Validates FR-11, FR-19.
-- **SM-R2: Độ chính xác Gom nhóm.** So gom theo vị trí, Loại phản ánh và ảnh với baseline gom chỉ theo vị trí. Validates FR-10.
+- **SM-R2: Độ chính xác Gom nhóm.** So gom theo vị trí, Loại phản ánh và ảnh với baseline gom chỉ theo vị trí. Chỉ đo trên Lĩnh vực có AI ảnh. Validates FR-10.
 - **SM-R3: Độ chính xác Sàng lọc.** Validates FR-9.
 - **SM-R6: Độ đúng của Gợi ý phân luồng.** Tỷ lệ Nhóm mà Cán bộ phường giữ nguyên Đơn vị chủ trì, và precision, recall của Đơn vị phối hợp gợi ý so với danh sách cuối cùng. Baseline: chỉ gửi Đơn vị chủ trì mặc định. Nếu không hơn baseline rõ rệt, báo cáo nói thẳng phân luồng theo phòng ít giá trị ở cấp phường. Cần thí điểm. Validates FR-57, FR-58.
 - **SM-R5: Độ nhạy phát hiện chất thải nguy hại và y tế.** Recall theo ảnh của hai nhãn "nguy hại" và "y tế" trên tập đánh giá; báo kèm precision. Tập đánh giá cần có ảnh nhóm tự dàn dựng với vật mẫu an toàn (vỏ pin, chai rỗng dán nhãn, bơm tiêm chưa dùng), không chụp chất thải nguy hại thật. Validates FR-50. `[ASSUMPTION: dựng ảnh bằng vật mẫu an toàn]`
@@ -1068,13 +1179,16 @@ Bảy rủi ro trong brief vẫn giữ nguyên. Bảng dưới tóm tắt hệ q
 | Ít phản ánh đi qua WRMS | Gom nhóm, thống kê ít giá trị; cán bộ phải theo dõi hai nơi | CXM-1; NFR-3; ghi chú ở §10.3 |
 | Dữ liệu công khai khác ảnh đường phố Việt Nam | Model kém trên ảnh thật | §6 (đánh giá trên ảnh tự chụp, báo độ chính xác thật) |
 | Ảnh có mặt người, biển số xe | Vi phạm Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 | FR-8, FR-41, §8.1 |
-| Lệch so với đơn đăng ký | Hội đồng hỏi vì sao làm khác đề tài đã đăng ký | §3.2, §11 (sáu thay đổi) |
-| Khối lượng lớn: 2 app, 3 thành phần AI, 5 người, 4 tháng; thêm nhóm nghiệp vụ 12 | Trễ hạn hoặc làm nông | §10.3 (bốn tầng, tám bước cắt) |
+| Lệch so với đơn đăng ký | Hội đồng hỏi vì sao làm khác đề tài đã đăng ký | §3.2, §11 (sáu thay đổi và hai thay đổi ngày 29/10) |
+| Khối lượng lớn: 3 giao diện (Mini App, app mobile, web), 3 thành phần AI và Nhãn ảnh, 5 người, 4 tháng; thêm nhóm nghiệp vụ 12 và FR-60 đến FR-63 | Trễ hạn hoặc làm nông | §10.3 (bốn tầng, tám bước cắt) |
+| Quyết định 4, 6, 7 ngày 29/10 ghi rất ngắn; PRD tự diễn giải (thêm 11/11) | Làm ra thứ phường không cần: sai người được theo dõi, sai nghĩa "đã trả lời công dân", sai phạm vi AI ảnh | Thẻ `[ASSUMPTION]` ở §5.3, FR-60 đến FR-63; §14, câu 30 đến 33 |
 | Bỏ sót chất thải nguy hại (thêm sau brief) | Cán bộ đi dọn chất thải nguy hại; vi phạm Điều 83 Luật Bảo vệ môi trường 2020 | FR-50 ưu tiên recall; Cờ từ Người nhận và Cán bộ phường (FR-51); khóa giao việc (FR-53); SM-R5, SM-C5 |
 | Cảnh báo đỏ chỉ trên web (thêm sau brief) | Không ai thấy cảnh báo kịp thời ngoài giờ mở web | FR-51; §14, câu 26 |
 | Căn cứ pháp lý chưa đối chiếu văn bản gốc (thêm sau brief) | Hội đồng chỉ ra căn cứ sai hoặc hết hiệu lực | §8.3; §14, câu 24 |
 
 ## 14. Câu hỏi mở
+
+Bảng dưới chỉ gồm câu còn mở. Câu đã chốt chuyển xuống §14.1; số câu giữ nguyên để tham chiếu cũ vẫn đúng.
 
 | # | Câu hỏi | Ai chốt | Trước khi nào | Chặn |
 | --- | --- | --- | --- | --- |
@@ -1083,30 +1197,42 @@ Bảy rủi ro trong brief vẫn giữ nguyên. Bảng dưới tóm tắt hệ q
 | 3 | CXM-3: hiện nay ai báo lại kết quả, cho ai, bằng cách nào | UBND phường | 01/01/2027 | SM-4, SM-5 |
 | 4 | CXM-4: ai dùng WRMS hằng ngày, phòng ban nào, bao nhiêu người; có người làm IT không | UBND phường | 01/01/2027 | FR-3, FR-18, mô hình tài khoản ở §4 |
 | 5 | Khi có nhiều Cán bộ phường, ai chia phản ánh cho từng người | UBND phường, nhóm | Trước kiến trúc | FR-18 |
-| 6 | Khu vực là gì: tổ dân phố, ba địa bàn cũ (Hòa Xuân, Hòa Châu, Hòa Phước), hay ô lưới bản đồ | Nhóm, hỏi phường | Trước kiến trúc (Khu vực gán lúc gửi) | FR-7, FR-36, FR-37, FR-41 |
-| 7 | Nguồn dữ liệu ranh giới phường Hòa Xuân sau sáp nhập theo Nghị quyết 1659/NQ-UBTVQH15 | Nhóm | Trước kiến trúc | FR-7 |
-| 8 | Có xác minh số điện thoại và khôi phục mật khẩu qua SMS không (có chi phí, ai trả); app hỗ trợ Android, iOS hay cả hai | Nhóm, GVHD; phường nếu phường trả phí | Trước kiến trúc | FR-1, FR-2, NFR-7 |
 | 9 | Ảnh không hợp lệ cho huấn luyện Sàng lọc lấy từ đâu, khi FR-41 không cho dùng ảnh bị loại và phản ánh bị từ chối | Nhóm, GVHD | Trước khi huấn luyện | FR-9, RQ-4, SM-R3 |
 | 10 | Thời hạn lưu phản ánh không bị từ chối; ảnh phản ánh được chấp nhận có dùng cho huấn luyện hay đánh giá không | UBND phường | Trước khi viết nội dung đồng ý | FR-8 |
 | 11 | Người dân rút lại đồng ý hoặc xóa tài khoản thì phản ánh đang xử lý và đã xong xử lý thế nào | UBND phường, nhóm | Trước thí điểm | FR-8, §8.1 |
 | 12 | Sau 04/2027: server đặt ở đâu, ai trả chi phí, ai bảo trì phần mềm và model | UBND phường, nhóm | Khi phường duyệt | §11 |
-| 13 | Có làm mờ mặt người và biển số không | Nhóm, GVHD | Trước kiến trúc | §8.1 |
-| 14 | Báo GVHD sáu thay đổi so với đơn đăng ký và xin xác nhận | GVHD | Trước khi chốt PRD cho kiến trúc | §11 |
-| 15 | Hướng mặc định khi phường chưa trả lời hoặc không duyệt; mốc cuối được đổi phạm vi | Nhóm, GVHD | 01/01/2027 | §2.1 |
+| 14 | Báo GVHD sáu thay đổi so với đơn đăng ký, cùng hai thay đổi ngày 29/10 và FR-60 (§11), và xin xác nhận | GVHD | Trước khi chốt PRD cho kiến trúc | §11 |
+| 15 | GVHD xác nhận hướng mặc định ở §2.1 (nhóm đã chấp nhận ngày 11/11/2026); mốc cuối được đổi phạm vi | GVHD, nhóm | 01/01/2027 | §2.1 |
 | 16 | Cách đóng một Nhóm đã Received mà không cần xử lý | UBND phường | Trước kiến trúc | §4.1, FR-16 |
 | 17 | Ngưỡng tối thiểu cho Mức gợi ý | Nhóm, GVHD | Trước thí điểm | FR-11, §6 |
 | 18 | Thứ tự cắt giảm từ bước 3 trở đi | Nhóm | Trước sprint đầu | §10.3 |
 | 19 | Có công bố bộ ảnh đánh giá không | Nhóm, GVHD | Trước báo cáo đồ án | §6, §8.1 |
-| 20 | Giữ trạng thái nhiệm vụ Cancelled; thay chỉ số của brief bằng SM-3, SM-4; Người dân phản hồi sau Completed | Nhóm, xác nhận với phường | Trước kiến trúc | FR-43, §12, §9 |
-| 21 | Nếu phường muốn giao việc trực tiếp và theo dõi tiến độ của đơn vị ngoài phường (nhánh thứ hai của CXM-2), có đưa vào v1 không | Nhóm, GVHD | Trước buổi làm việc với phường | §2, §9 |
+| 20 | Phường xác nhận trạng thái nhiệm vụ Cancelled (nhóm đã chốt giữ ngày 11/11/2026) | UBND phường | Trước thí điểm | FR-43 |
 | 22 | Việc từ chối phản ánh hiện trường có thuộc diện khiếu nại theo Luật Khiếu nại 2011 không (căn cứ cho mốc 90 ngày) | GVHD, UBND phường | Trước khi viết nội dung đồng ý | FR-41, FR-8, §8.1 |
-| 23 | Danh sách tuyến đường, cống, công trình do phường quản lý sau khi bỏ cấp quận, để cán bộ biết khi nào đóng "Ngoài thẩm quyền" | UBND phường | Trước thí điểm | FR-56, §8.3 |
+| 23 | Danh sách tuyến cống, mương, công trình vệ sinh môi trường do phường quản lý sau khi bỏ cấp quận, để cán bộ biết khi nào đóng "Ngoài thẩm quyền" | UBND phường | Trước thí điểm | FR-56, §8.3 |
 | 24 | Phân luồng: Trung tâm Cung ứng dịch vụ sự nghiệp công có cử người ra hiện trường không; Trạm Y tế và Công an phường có dùng hệ thống không; khung giờ đêm cho tiếng ồn; trong Phòng Kinh tế, Hạ tầng và Đô thị ai nhận việc (Trưởng phòng phân hay giao thẳng công chức) | UBND phường | Trước kiến trúc | FR-5, FR-57, FR-59 |
 | 25 | Phường phối hợp với đơn vị nào để thu gom chất thải nguy hại; ai khoanh vùng hiện trường | UBND phường | Trước thí điểm | FR-55, UJ-9 |
 | 26 | Cảnh báo đỏ có cần kênh ngoài web (SMS, Zalo, email) không; ai trả chi phí | UBND phường, nhóm | Trước kiến trúc | FR-51, FR-34 |
 | 27 | Ai sở hữu nhóm nghiệp vụ 12 | Nhóm | Trước sprint đầu | §5.12, addendum |
 | 29 | Hạn chót mặc định theo QĐ 132/2026 (10 ngày làm việc, 1 ngày cho mức Cao) có khớp cách phường đang làm không | UBND phường | Trước thí điểm | FR-23 |
-| 28 | Cán bộ phường chụp ảnh tại hiện trường (FR-20, FR-55) bằng web trên điện thoại, hay cũng được đăng nhập app mobile cho cán bộ. Cán bộ phòng ban đã chốt dùng app mobile (02/11/2026) | Nhóm, hỏi phường | Trước kiến trúc | FR-20, FR-55, NFR-7 |
+| 30 | Nguồn dữ liệu và thước đo cho nhãn "thoát nước"; tỷ lệ gợi ý sửa loại sai chấp nhận được; GVHD xác nhận phạm vi AI theo Lĩnh vực ở §5.3 (nhóm đã chốt ngày 11/11/2026) | Nhóm, GVHD | Trước khi huấn luyện | §5.3, FR-60, §6 |
+| 32 | "Người phụ trách" phường muốn theo dõi là ai trong phòng (Trưởng phòng, Phó Trưởng phòng hay công chức được giao); ai soạn câu trả lời cho công dân, và có cần nội dung chữ riêng ngoài thông báo kết quả không (`chot-2026-10-29.md`, câu 6, 8) | UBND phường | Trước UX | FR-62, FR-30, FR-32 |
+| 33 | "Quá thời gian chưa nhận tin" là bao lâu, tính theo giờ đồng hồ hay giờ làm việc; hạn trả lời công dân là bao lâu, có cần nhắc khi Nghiệm thu chậm không; Lãnh đạo có cần xem theo mảng mình phụ trách, có cần nhận thông báo quá hạn hay Cảnh báo đỏ không (`chot-2026-10-29.md`, câu 3, 7) | UBND phường | Trước thí điểm | FR-61, FR-62, FR-63, FR-51 |
+
+### 14.1 Câu đã chốt
+
+| # | Quyết định | Ai chốt | Ngày | Còn chờ |
+| --- | --- | --- | --- | --- |
+| 6 | Khu vực là ba địa bàn trước sáp nhập: Hòa Xuân, Hòa Châu, Hòa Phước (§4) | Người dùng | 11/11/2026 | Không |
+| 7 | Ranh giới phường là một file GeoJSON do nhóm dựng từ dữ liệu mở, kiểm với bản đồ hành chính; thay khi phường đưa dữ liệu (FR-7) | Người dùng | 11/11/2026 | Nhóm dựng file trước khi làm FR-7 |
+| 8 | Người dân định danh bằng tài khoản Zalo, không mật khẩu, không SMS (FR-1, FR-2). App mobile làm Android trước, iOS nếu còn thời gian (NFR-7) | Người dùng | 11/11/2026 | Spike `getPhoneNumber` trên bản Development; báo GVHD |
+| 13 | Không làm mờ mặt người và biển số trong v1 (§8.1) | Người dùng | 11/11/2026 | GVHD xác nhận |
+| 15 | Theo hướng mặc định ở §2.1 khi phường chưa trả lời hoặc không duyệt | Người dùng | 11/11/2026 | GVHD xác nhận; mốc cuối đổi phạm vi (câu 15 ở bảng trên) |
+| 20 | Giữ trạng thái nhiệm vụ Cancelled (FR-43). Dùng SM-3, SM-4 thay ba chỉ số của brief (§12). Không mở lại phản ánh đã Completed; giữ đánh giá sao FR-45 (§9) | Người dùng | 11/11/2026 | Phường xác nhận Cancelled (câu 20 ở bảng trên) |
+| 21 | Không đưa việc giao và theo dõi đơn vị ngoài phường vào v1 (§9) | Mentor, người dùng | 29/10/2026 (quyết định 2) | Không |
+| 28 | Cán bộ phường chụp ảnh tại hiện trường bằng web trên điện thoại; không đăng nhập app mobile (NFR-7) | Người dùng | 11/11/2026 | Không |
+| 30 | AI ảnh cho thoát nước chỉ gồm Nhãn ảnh và so ảnh khi Gom nhóm; Mức gợi ý chỉ ở Lĩnh vực thí điểm; Sàng lọc chạy cho mọi ảnh (§5.3) | Người dùng | 11/11/2026 | GVHD xác nhận; dữ liệu nhãn "thoát nước" (câu 30 ở bảng trên) |
+| 31 | Ảnh bắt buộc với mọi Loại phản ánh, kể cả Tiếng ồn, Không khí và mùi hôi (FR-6) | Người dùng | 11/11/2026 | Hỏi lại phường trong buổi làm việc |
 
 ## 15. Chỉ mục giả định
 
@@ -1114,7 +1240,14 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 
 **Cần UBND phường xác nhận**
 
-- §3.3 — UJ-1 đến UJ-9 là hành trình giả định.
+- §3.3 — UJ-1 đến UJ-10 là hành trình giả định.
+- FR-61 — mọi Lãnh đạo xem mọi Lĩnh vực, không chia theo mảng Phó Chủ tịch phụ trách.
+- FR-61 — Lãnh đạo không nhận thông báo trong v1.
+- FR-62 — "người phụ trách" là Người nhận của Nhiệm vụ; với Nhóm xử lý chỉ tính Trưởng nhóm.
+- FR-62 — "đã xử lý" là đã nộp Minh chứng, chưa cần Nghiệm thu.
+- FR-62 — "đã trả lời công dân" là thông báo kết quả Completed hoặc Closed đã gửi; không có hạn trả lời riêng.
+- FR-63 — Hạn đọc 4 giờ theo đồng hồ.
+- FR-63 — quá hạn đọc chỉ hiện nhãn, không báo riêng Cán bộ phụ trách.
 - §4.1 — thêm trạng thái nhiệm vụ Cancelled.
 - §4.1 — Closed không mở lại được.
 - FR-8 — không chia sẻ thông tin liên hệ của Người gửi khi phường chuyển việc ra ngoài.
@@ -1124,7 +1257,7 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 - FR-51 — Cảnh báo đỏ chỉ trên web trong v1.
 - FR-52 — gỡ Cờ chỉ từ AI không cần ra hiện trường.
 - §4.1 — "người được giao tiếp tục" nghĩa là Declined chuyển sang Accepted.
-- FR-1 — số điện thoại là định danh đăng ký.
+- FR-1 — số điện thoại bắt buộc để gửi phản ánh.
 - FR-7 — chặn vị trí ngoài ranh giới phường.
 - FR-8 — giữ phản ánh không bị từ chối 24 tháng (giá trị tạm).
 - FR-18 — mọi Cán bộ phường thấy toàn bộ Hàng chờ.
@@ -1142,7 +1275,7 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 
 **Cần GVHD xác nhận**
 
-- §2.1 — nhóm và GVHD chấp nhận hướng mặc định.
+- §2.1 — GVHD chấp nhận hướng mặc định (nhóm đã chấp nhận 11/11/2026).
 - §6 — có người ngoài nhóm gán nhãn độc lập.
 - §6 — thước đo cụ thể cho SM-R1 đến SM-R3.
 - §6 — nhóm tự dựng ảnh không hợp lệ cho tập đánh giá.
@@ -1150,6 +1283,10 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 - FR-50 — ưu tiên recall cho nhãn nguy hại và y tế.
 - SM-R5 — dựng ảnh đánh giá bằng vật mẫu an toàn.
 - §10.3 — tầng phân luồng, thẩm quyền và an toàn không cắt.
+- §5.3 — cách hiểu quyết định 4: phạm vi AI theo Lĩnh vực (nhóm đã chốt 11/11/2026).
+- FR-10 — Gom nhóm ở ba Lĩnh vực không có AI ảnh không so ảnh.
+- FR-60 — Nhãn ảnh ở mức Lĩnh vực.
+- FR-60 — Nhãn ảnh chạy cho ảnh của mọi Phản ánh.
 
 **Nhóm tự chốt**
 
@@ -1173,6 +1310,7 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 - FR-13 — thứ tự sắp Hàng chờ.
 - FR-13 — quy tắc chọn Phản ánh đại diện.
 - FR-13 — bán kính mặc định 100 m.
+- FR-13 — nội dung và thứ tự danh sách Nhóm nguy hại.
 - FR-14 — điều kiện gộp hai Nhóm.
 - FR-23 — hiển thị số Nhiệm vụ đang mở khi chọn Người nhận.
 - FR-24 — Nhóm xử lý tối thiểu hai người, cùng Đơn vị.
@@ -1192,9 +1330,11 @@ Mọi thẻ `[ASSUMPTION]` trong PRD, chia theo người cần xác nhận. Nên
 - NFR-4 — Cán bộ phòng ban không xem Hàng chờ chung.
 - NFR-5 — phiên web 8 giờ, khóa 15 phút sau 5 lần sai.
 - NFR-7 — cỡ chữ hệ thống; Chrome và Edge; màn hình từ 1366 px.
+- NFR-7 — nghĩa của "chụp trực tiếp" trên web.
 - NFR-10 — nén ảnh về tối đa 2 MB.
 - NFR-11 — sao lưu hằng ngày, giữ 14 ngày.
 - §10.3 — giữ FR-37 khi cắt FR-36; các bước cắt từ 3 trở đi.
+- §10.3 — FR-61 đến FR-63 không cắt vì là yêu cầu của phường.
 - SM-4 — mốc 7 ngày.
 
 **Giao cho kiến trúc**
